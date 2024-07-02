@@ -45,29 +45,25 @@ ExecStart=/var/www/saoa.lapinf.ufn.edu.br/saoa/venv/bin/gunicorn --access-logfil
     - adicionar o sistema como serviço reconhecido no sistema:
         - sudo systemctl enable saoa
 
-============
-Nginx
 
-Esse é o roteiro para criar outros serviços virtuais, ai e só substituir exemplo.com pelo  domínio que tu vai utilizar sem www (por exemplo, comic.labinf.ufn.edu.br)
+### NGINX
  
-Crie o diretório para examplo.com como a seguir, usando o flag -p para criar qualquer diretório pai necessário:
- 
-sudo mkdir -p pastaServidor/examplo.com/
-  
 Para que o Nginx sirva esse conteúdo, é necessário criar um bloco de servidor com as diretivas corretas. 
-Em vez de modificar o arquivo de configuração padrão diretamente, vamos criar um novo em /etc/nginx/sites-available/examplo.com:
+Em vez de modificar o arquivo de configuração padrão diretamente, vamos criar um novo em 
+
+    - /etc/nginx/sites-available/saoa.lapinf.ufn.edu.br
  
-sudo vim /etc/nginx/sites-available/exemplo.com
+    - sudo vim /etc/nginx/sites-available/saoa.lapinf.ufn.edu.br
+
+
 Cole dentro o seguinte bloco de configuração, que é similar ao padrão, mas atualizado para nosso novo diretório e nome de domínio:
  
-/etc/nginx/sites-available/exemplo.com
- 
+```
 server {
-        server_name comic.lapinf.ufn.edu.br www.comic.lapinf.ufn.edu.br;
+        server_name saoa.lapinf.ufn.edu.br www.saoa.lapinf.ufn.edu.br;
         client_body_in_file_only clean;
         client_body_buffer_size 32K;
         client_max_body_size 2512M;
-
 
         #aceitar arquivos grande via get
         client_header_buffer_size 3232k;
@@ -80,40 +76,39 @@ server {
                 expires 30d;
                 access_log off;
                 break;
-                alias /var/www/comic.lapinf.ufn.edu.br/comic/projeto/projeto/static;
+                alias /var/www/saoa.lapinf.ufn.edu.br/saoa/projeto/projeto/static;
         }
 
         location / {
                 client_max_body_size 2048M;
                 include proxy_params;
-                proxy_pass http://unix:/var/www/comic.lapinf.ufn.edu.br/comic/comic.sock;
+                proxy_pass http://unix:/var/www/saoa.lapinf.ufn.edu.br/saoa/projeto/saoa.sock;
         }
 } 
+```
+
 Observe que atualizamos a configuração root para corresponder ao nosso novo diretório e 
-server_name ao nosso nome de domínio.
+server_name ao nosso nome de domínio. A seguir, vamos ativar o arquivo através da criação de um link dele para o diretório sites-enabled, a partir do qual o Nginx lê durante a inicialização:
  
-A seguir, vamos ativar o arquivo através da criação de um link dele para o diretório sites-enabled, 
-a partir do qual o Nginx lê durante a inicialização:
- 
-sudo ln -s /etc/nginx/sites-available/exemplo.com /etc/nginx/sites-enabled/
+    - sudo ln -s /etc/nginx/sites-available/saoa.lapinf.ufn.edu.br /etc/nginx/sites-enabled/
  
 Depois, teste para certificar-se de que não existem erros de sintaxe em quaisquer de seus arquivos do Nginx:
  
-sudo nginx -t
-Salve e feche o arquivo quando tiver terminado.
- 
-Se não houver problemas, reinicie o Nginx para ativar suas alterações:
- 
-sudo systemctl restart nginx
+    - sudo nginx -t
 
-=============================
+
+Salve e feche o arquivo quando tiver terminado. Se não houver problemas, reinicie o Nginx para ativar suas alterações:
  
-Obtendo um Certificado SSL
+    - sudo systemctl restart nginx
+
+
+### Obtendo um Certificado SSL
  
-sudo certbot --nginx -d exemplo.com -d www.exemplo.com
+    - sudo certbot --nginx -d saoa.lapinf.ufn.edu.br -d www.saoa.lapinf.ufn.edu.br
  
-Se isso for bem sucedido, o certbot perguntará como você gostaria de definir suas configurações de HTTPS.
-Usa 2 para sempre redirecionar para SSL
+Se isso for bem sucedido, o certbot perguntará como você gostaria de definir suas configurações de HTTPS. Usa 2 para sempre redirecionar para SSL
+
+```
 Output
 Please choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.
 -------------------------------------------------------------------------------
@@ -143,30 +138,31 @@ IMPORTANT NOTES:
 - If you like Certbot, please consider supporting our work by:
  
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
-  Donating to EFF:                    https://eff.org/donate-le
+   Donating to EFF:                    https://eff.org/donate-le
  
+```
 
-============
+### Criando esquema de BD no MYSQL
 
-PARA VISUALIZAR, SE NECESSÁRIO, OS USUÁRIOS DO MYSQL
-SELECT user FROM mysql.user;
+PARA VISUALIZAR, SE NECESSÁRIO, OS USUÁRIOS DO MYSQL:
+    - SELECT user FROM mysql.user;
 
-CREATE DATABASE nomeDoSistema_db;
+    - CREATE DATABASE saoa_db;
 
-CREATE USER ‘nomeDoSistema’@‘localhost' IDENTIFIED BY ‘senhaDesejada’;
+    - CREATE USER 'saoa'@'localhost' IDENTIFIED BY 'senhaDesejada';
 
-GRANT ALL PRIVILEGES ON nomeDoSistema_db.* TO ‘nomeDoSistema’@‘localhost' IDENTIFIED BY 'senhaDesejada';
+    - GRANT ALL PRIVILEGES ON saoa_db.* TO 'saoa'@'localhost' IDENTIFIED BY 'senhaDesejada';
 
-============
-Criando o primeiro usuário
+### Criando primeiro usuário
 
-na pasta projeto do sistema, com a venv ativa,
-rodar migrate
+Na pasta projeto do sistema, com a venv ativa, rodar shell
 
+    - python projeto/manage.py shell
 
+```
 from usuario.models import Usuario
 u = Usuario()
-u.nome = 'SADEPI'
+u.nome = 'Nome do Usuario'
 u.tipo = 'ADMINISTRADOR'
 u.email = 'projetos@ufn.edu.br'
 u.is_active = True
@@ -174,10 +170,14 @@ u.cpf = '99999999999'
 u.save()
 u.set_password('projetos@ufn.edu.br')
 u.save()
+```
 
-=======
-.env
-DATABASE_URL=mysql://sadepi:sadepi2018$@127.0.0.1:3306/sadepi_db
+
+### Configurar .env o driver do MYSQL
+
+No arquivo .env adicionar:
+
+    - DATABASE_URL=mysql://saoa:senhaEscolhida$@127.0.0.1:3306/saoa_db
 
 
 
