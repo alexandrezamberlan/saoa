@@ -28,7 +28,7 @@ SECRET_KEY = '=%6aqk0p^aux0qvolqn_7efyj(@wh*wtc_!n10u8_o4!l#k6)h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['www.saoa.lapinf.ufn.edu.br','saoa.lapinf.ufn.edu.br']
 
 AUTH_USER_MODEL = 'usuario.Usuario'
 
@@ -139,4 +139,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'projeto/static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = '/media/'
 
-DOMINIO_URL='http://localhost:8000'
+DOMINIO_URL='https://saoa.lapinf.ufn.edu.br:8000'
