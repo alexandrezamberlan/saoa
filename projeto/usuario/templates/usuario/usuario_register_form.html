@@ -11,7 +11,14 @@
 {% endblock %}
 
 {% block content %}
-<form class="form" role="form" method="POST">
+<script>
+  function autocadastrar(){
+      $("#btnCadastrar").html('Aguarde...').attr('disabled', true);
+      $("#formAutocadastro").submit();
+  }
+</script>
+
+<form id="formAutocadastro" class="form" role="form" method="POST">
   {% csrf_token %}
   {{ form.non_field_errors }}
   
@@ -68,8 +75,8 @@ Ao prosseguir com o cadastro, você estará concordando com os termos acima e au
 
   {% bootstrap_field form.aceita_termo %}
   <hr>
-  {% buttons submit='Gravar' %}
-    <a href="{% url 'home_redirect' %}"class="btn btn-warning" role="button">Voltar</a>
-  {% endbuttons %}
+  <button id="btnCadastrar" type="button" class="btn btn-default" onclick="autocadastrar();">Gravar</button>
+  <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
+  
 </form>
 {% endblock %}
