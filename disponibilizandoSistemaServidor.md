@@ -153,6 +153,8 @@ PARA VISUALIZAR, SE NECESSÁRIO, OS USUÁRIOS DO MYSQL:
 
     - GRANT ALL PRIVILEGES ON saoa_db.* TO 'saoa'@'localhost' IDENTIFIED BY 'senhaDesejada';
 
+### Rodar migrates
+
 ### Criando primeiro usuário
 
 Na pasta projeto do sistema, com a venv ativa, rodar shell
