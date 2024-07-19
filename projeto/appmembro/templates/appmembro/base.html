@@ -1,0 +1,45 @@
+{% extends 'appmembro/bootstrap.html' %}
+{% load static %}
+
+{% load bootstrap3 %}
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NEYJ093R7"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9NEYJ093R7');
+    </script>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block bootstrap3_title %}Longevos{% endblock %}</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NEYJ093R7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9NEYJ093R7');
+    </script>
+</head>
+
+{% block bootstrap3_content %}
+	{% include 'appmembro/includes/_menu_principal.html' %}
+    <br><br><br>
+    <div class="container-fluid">
+        <h2>{% block title %}(no title){% endblock %}</h2>
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+    </div>
+    <br>
+    <br>
+    <br>
+    {% include 'core/includes/_barra_status.html' %}
+{% endblock %}
