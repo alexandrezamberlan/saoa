@@ -4,20 +4,9 @@
 {% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
 
 {% block bootstrap3_extra_head %}
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NEYJ093R7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-9NEYJ093R7');
-    </script>
     <link href="{% static 'core/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'core/css/bootstrap.min.css' %}" rel="stylesheet"/>
-    <link rel = "icon" href =
-        "{% static 'core/img/favicon.ico' %}"
-        type = "image/x-icon">
+
     <style>
         .imagem-redonda-customizada {
             width: 30px;
@@ -51,12 +40,5 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
-
-    <script src="{% static 'core/vendors/jquery.maskedinput/dist/jquery.maskedinput.min.js' %}"></script>
-    <script src="{% static 'core/js/mascaras-genericas.js' %}"></script>
-
-    <script src="{% static 'core/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
-    <script src="{% static 'core/vendors/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js' %}"></script>
-    <script src="{% static 'core/js/datepicker.js' %}"></script>
-    
 {% endblock %}
+
