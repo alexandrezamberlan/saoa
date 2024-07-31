@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from datetime import timedelta, date
+from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.contrib import messages
@@ -17,11 +17,10 @@ from mail_templated import EmailMessage
 from utils.decorators import LoginRequiredMixin, MembroRequiredMixin
 
 from aviso.models import Aviso
-# from inscricao.models import Inscricao
-
+from submissao.models import Submissao
 from usuario.models import Usuario
 
-from .forms import MembroCreateForm
+from .forms import MembroCreateForm, BuscaSubmissaoForm, SubmissaoForm
 # from inscricao.forms import BuscaInscricaoForm
 
 
@@ -51,6 +50,167 @@ class DadosMembroUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView)
         messages.success(self.request, 'Seus dados foram alterados com sucesso!')
         return reverse(self.success_url)
     
+
+class SubmissaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
+    model = Submissao
+    template_name = 'appmembro/submissao_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            context['form'] = BuscaSubmissaoForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            context['form'] = BuscaSubmissaoForm()
+        return context
+
+    def get_queryset(self):                
+        qs = Submissao.objects.all()
+        qs = qs.filter(responsavel = self.request.user)      
+        
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            form = BuscaSubmissaoForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            form = BuscaSubmissaoForm()
+
+        if form.is_valid():            
+            situacao = form.cleaned_data.get('situacao')            
+            pesquisa = form.cleaned_data.get('pesquisa')    
+                
+            if situacao:
+                qs = qs.filter(status=situacao)        
+                
+            if pesquisa:
+                qs = qs.filter(Q(evento__coordenador__nome__icontains=pesquisa) | Q(evento__nome__icontains=pesquisa) | Q(titulo__icontains=pesquisa) | Q(resumo__icontains=pesquisa) | Q(responsavel__nome__icontains=pesquisa))
+                
+            
+        return qs
+
+
+class SubmissaoCreateView(LoginRequiredMixin, MembroRequiredMixin, CreateView):
+    model = Submissao
+    template_name = 'appmembro/submissao_form.html'
+    form_class = SubmissaoForm
+    success_url = 'appmembro_submissao_list'
+
+    def form_valid(self, form):
+        try:
+            # messages.warning(self.request, 'PASSEI')
+            submissao = form.save(commit=False)
+            submissao.responsavel = self.request.user
+            submissao.save()
+            self.object = submissao
+        except Exception as e:
+            messages.error(self.request, 'Erro ao submeter o projeto. %s' % e)
+        
+        return super(SubmissaoCreateView, self).form_valid(form)
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Sua submissão foi gravada e enviada com sucesso!')
+        return reverse(self.success_url)
+
+
+class SubmissaoUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+    model = Submissao
+    form_class = SubmissaoForm
+    template_name = 'appmembro/submissao_form.html'
+    success_url = 'appmembro_submissao_list'
+    
+    def form_valid(self, form):
+        try:
+            submissao = form.save(commit=False)
+            submissao.dt_atualizacao_submissao = datetime.now()
+            submissao.save()
+            self.object = submissao
+        except Exception as e:
+            messages.error(self.request, 'Erro ao atualizar o projeto. %s' % e)
+        
+        return super(SubmissaoUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Sua submissão foi alterada, gravada e enviada com sucesso!')
+        return reverse(self.success_url)
+    
+    
+class SubmissaoPendenteUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+    model = Submissao
+    template_name = 'appmembro/submissao_corrigir_form.html'
+    fields = ['arquivo_atualizacao_pendencia_projeto']
+    success_url = 'appmembro_submissao_list'
+
+    def get_object(self,queryset=None):
+        obj = super().get_object(queryset)
+        return obj
+        
+        # if obj.permite_corrigir:
+        #     return obj
+        # else:
+        #     raise Http404()
+    
+    def get_success_url(self):
+        return reverse(self.success_url)
+    
+class SubmissaoAprovadoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Submissao
+    fields = ['arquivo_comite_etica', 'arquivo_relatorio_parcial', 'arquivo_relatorio_final', 
+              'registros_apos_aprovacao', 'arquivo_emenda1', 'arquivo_emenda2', 'arquivo_emenda3']
+    template_name = 'appmembro/submissao_aprovado_form.html'
+    success_url = 'appmembro_submissao_list'
+
+    def get_object(self,queryset=None):
+        obj = super().get_object(queryset)
+        return obj
+    
+    def form_valid(self, form):
+        try:
+            submissao = form.save(commit=False)
+            submissao.dt_atualizacao_submissao = datetime.now()
+            submissao.save()
+            self.object = submissao
+        except Exception as e:
+            messages.error(self.request, 'Erro ao atualizar o projeto. %s' % e)
+        
+        return super(SubmissaoAprovadoUpdateView, self).form_valid(form)
+    
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
+class SubmissaoDeleteView(LoginRequiredMixin, MembroRequiredMixin, DeleteView):
+    model = Submissao
+    template_name = 'appmembro/submissao_confirm_delete.html'
+    success_url = 'appmembro_submissao_list'
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Call the delete() method on the fetched object and then redirect to the
+        success URL. If the object is protected, send an error message.
+        """
+        self.object = self.get_object()
+        # success_url = self.get_success_url()
+        try:
+            self.object.delete()
+            messages.success(request, 'Sucesso em excluir sua submissão!')
+        except Exception as e:
+            messages.error(request, 'Há dependências ligadas à essa submissão, permissão negada!')
+        return redirect(self.success_url)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            submissao = Submissao.objects.get(id=kwargs['pk'])
+            if submissao.responsavel != request.user:
+                raise Exception('Você não tem permissão para deletar esta submissão!')
+        except Exception as e:
+            messages.error(request, e)
+            return redirect(self.success_url)
+        return super(SubmissaoDeleteView, self).get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
 
 # class InscricaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
 #     model = Inscricao

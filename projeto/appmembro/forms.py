@@ -1,5 +1,7 @@
 from django import forms
 
+from evento.models import Evento
+from submissao.models import Submissao
 from usuario.models import Usuario
 
 
@@ -36,4 +38,35 @@ class MembroCreateForm(forms.ModelForm):
         fields = ['nome','titulacao', 'area', 'instituicao', 'email', 'celular', 'cpf']
 
 
+class SubmissaoForm(forms.ModelForm):
+    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos)    
+ 
+    class Meta:
+        model = Submissao
+        fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 
+                  'arquivo_comite_etica', 'observacoes']
 
+    # def clean_colaborador(self):
+    #     colaborador = self.cleaned_data.get('colaborador')
+    #     responsavel = self.cleaned_data.get('responsavel')
+
+    #     if (responsavel in colaborador.all()):
+    #         raise forms.ValidationError('Um professor não pode ser ao mesmo tempo responsável e colaborador')
+    #     return colaborador
+
+
+class BuscaSubmissaoForm(forms.Form):     
+    STATUS = (
+        (None, '-----------'),
+        ('EM EDICAO', 'Em edição'),
+        ('EM ANALISE', 'Em análise'),
+        ('EM CORRECAO', 'Em correção' ),        
+        ('APROVADO', 'Aprovado' ),
+        ('RETIRADO PELO RESPONSAVEL', 'Retirado pelo responsável'),
+        ('RETIRADO PELO COORDENADOR', 'Retirado pelo coordenador' ),
+        ('REPROVADO', 'Reprovado' ),  
+    )         
+    
+    situacao = forms.ChoiceField(label='Status da submissão', choices=STATUS, required=False)
+    pesquisa = forms.CharField(label='Pesquisa livre', required=False)
+    
