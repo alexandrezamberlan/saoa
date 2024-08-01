@@ -24,9 +24,9 @@
 
         <li class=""><a href="{% url 'appmembro_dados_update' %}">{% bootstrap_icon 'user' %} Meus dados</a></li>
 
-        <li class=""><a href="{% url 'appmembro_submissao_list' %}""> {% bootstrap_icon 'list-alt' %} Minhas Submissões <span class="sr-only">(current)</span></a></li>
+        <li class=""><a href="{% url 'appmembro_submissao_list' %}"> {% bootstrap_icon 'list-alt' %} Minhas Submissões <span class="sr-only">(current)</span></a></li>
         <li class=""><a href=""> {% bootstrap_icon 'check' %} Minhas Avaliações <span class="sr-only">(current)</span></a></li>
-        <li class=""><a href=""> {% bootstrap_icon 'book' %} Modelos de Artigos <span class="sr-only">(current)</span></a></li>
+        <li class=""><a href="{% url 'appmembro_evento_list' %}"> {% bootstrap_icon 'glass' %} <b>Eventos Ativos</b>  <span class="sr-only">(current)</span></a></li>
         
       </ul>
       

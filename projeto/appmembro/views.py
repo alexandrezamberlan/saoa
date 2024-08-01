@@ -17,10 +17,12 @@ from mail_templated import EmailMessage
 from utils.decorators import LoginRequiredMixin, MembroRequiredMixin
 
 from aviso.models import Aviso
+from evento.models import Evento
 from submissao.models import Submissao
 from usuario.models import Usuario
 
 from .forms import MembroCreateForm, BuscaSubmissaoForm, SubmissaoForm
+from evento.forms import BuscaEventoForm
 # from inscricao.forms import BuscaInscricaoForm
 
 
@@ -49,7 +51,38 @@ class DadosMembroUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView)
     def get_success_url(self):
         messages.success(self.request, 'Seus dados foram alterados com sucesso!')
         return reverse(self.success_url)
-    
+
+class EventoListView(LoginRequiredMixin, ListView):
+    model = Evento
+    template_name = 'appmembro/evento_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            context['form'] = BuscaEventoForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            context['form'] = BuscaEventoForm()
+        return context
+
+    def get_queryset(self):                
+        qs = super().get_queryset().filter(is_active=True)
+        
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            form = BuscaEventoForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            form = BuscaEventoForm()
+
+        if form.is_valid():            
+            pesquisa = form.cleaned_data.get('pesquisa')            
+                        
+            if pesquisa:
+                qs = qs.filter(nome__icontains=pesquisa)
+            
+        return qs
 
 class SubmissaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
     model = Submissao

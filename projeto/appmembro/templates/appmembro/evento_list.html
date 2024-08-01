@@ -1,8 +1,8 @@
-{% extends 'core/base.html' %}
+{% extends 'appmembro/base.html' %}
 {% load bootstrap3 %}
 
 {% block title %}
-	{% bootstrap_icon 'glass' %} Eventos
+	{% bootstrap_icon 'glass' %} Eventos abertos
 {% endblock %}
 
 {% block content %}
@@ -16,29 +16,20 @@
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<br>
 					<button type="submit" class="btn btn-success btn-md"  style="width: 100%;">{% bootstrap_icon 'search' %} Buscar</button>
-				</div>			
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<br>
-					<a href="{% url 'evento_create' %}" class="btn btn-md btn-primary" style="width: 100%;">{% bootstrap_icon 'record' %} Cadastrar evento</a>
-				</div>			
+				</div>					
 			</div>
 		</form>
 		</div>
 	</div>
 
-	
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead>
 				<th>Evento</th>
-				<th>Coordenação</th>
-				<th class="text-center">Site</th>
 				<th>Email comissão</th>
-				<th class="text-center">Templates</th>
-				<th class="text-center">Data submissão</th>
-				<th class="text-center">Ativo</th>
-				<th class="text-center">Editar</th>
-				<th class="text-center">Excluir</th>
+				<th  class="text-center">Site</th>
+				<th  class="text-center">Templates</th>
+				<th>Data limite</th>
 			</thead>
 			<tbody>
 				{% for evento in object_list %}
@@ -48,12 +39,9 @@
 							<small>{{ evento.tipo }} | {{ evento.instituicao }}</small>
 						</td>
 						<td>
-							Responsável: {{ evento.coordenador }}<br>
-							{% if evento.coordenador_suplente %}
-								<small> Suplente: {{evento.coordenador_suplente}} </small>
-							{% endif %}
-						</td>	
-						<td class="text-center">
+							{{  evento.email }}
+						</td>
+						<td  class="text-center">
 							{% if evento.site %}
 								<a href="{{ evento.site }}" target="_blank" class="btn btn-sm btn-info">
 									{% bootstrap_icon 'globe' %}
@@ -64,9 +52,6 @@
 								</a>
 							{% endif %}
 						</td>	
-						<td>
-							{{  evento.email }}
-						</td>
 						<td class="text-center">
 							{% if evento.arquivo_modelo %} 
 								<a href="{{ evento.arquivo_modelo.url }}" target="_blank" class="btn btn-sm btn-info">
@@ -78,22 +63,11 @@
 								</a>
 							{% endif %}
 						</td>
-						<td class="text-center">
-							{{ evento.data_limite_trabalhos|date:'d/m/Y' }}
+						<td>
+							<b>
+								{{ evento.data_limite_trabalhos|date:'d/m/Y' }}
+							</b>
 						</td>											
-						<td class="text-center">
-							{% if evento.is_active %}
-								{% bootstrap_icon 'thumbs-up' size='sm' %}
-							{% else %}
-								{% bootstrap_icon 'thumbs-down' size='sm' %}
-							{% endif %}
-						</td>
-						<td class="text-center">
-							{% bootstrap_button content='' href=evento.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-						</td>
-						<td class="text-center">
-							{% bootstrap_button content='' href=evento.get_delete_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
-						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
