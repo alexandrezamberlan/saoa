@@ -150,9 +150,6 @@ STATIC_URL = config('STATIC_URL')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'projeto/static/')
 
-SESSION_COOKIE_AGE = 60*60*24
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_SAVE_EVERY_REQUEST = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = '/media/'
