@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.urls import reverse
 #from django.utils.translation import ugettext_lazy as _
 
+from evento.models import Evento
+
 from datetime import timedelta, datetime
 
 from utils.gerador_hash import gerar_hash
@@ -132,3 +134,8 @@ class Usuario(AbstractBaseUser):
     @property
     def get_usuario_register_activate_url(self):
         return '%s%s' % (settings.DOMINIO_URL, reverse('usuario_register_activate', kwargs={'slug': self.slug}))
+
+
+    @property
+    def total_eventos_ativos(self):
+        return Evento.objects.filter(is_active=True).count()
