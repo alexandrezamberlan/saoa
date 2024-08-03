@@ -98,7 +98,29 @@
 							{% endif %}
 						</td>						
 						<td class="text-center">
-							<span data-toggle="tooltip"  title='Pareceres de avaliadores'>
+							<span data-toggle="tooltip"  title='Parecer avaliador 1'>
+								{% if submissao.get_segundo_arquivo_parecer_comissao %}
+									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% else %}
+									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% endif %}
+							</span>
+							<span data-toggle="tooltip"  title='Parecer avaliador 2'>
+								{% if submissao.get_segundo_arquivo_parecer_comissao %}
+									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% else %}
+									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+										{% bootstrap_icon 'download' %}
+									</a>
+								{% endif %}
+							</span>
+							<span data-toggle="tooltip"  title='Parecer avaliador 3'>
 								{% if submissao.get_segundo_arquivo_parecer_comissao %}
 									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
 										{% bootstrap_icon 'download' %}
