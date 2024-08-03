@@ -70,6 +70,14 @@ class Submissao(models.Model):
     @property
     def get_delete_url(self):
         return reverse('submissao_delete', kwargs={'slug': self.slug})
+    
+    @property
+    def get_appmembro_absolute_url(self):
+        return reverse('appmembro_submissao_update', kwargs={'slug': self.slug})
+
+    @property
+    def get_delete_appmembro_url(self):
+        return reverse('appmembro_submissao_delete', kwargs={'slug': self.slug})
 
 
 #triggers para limpeza dos arquivos apagados ou alterados. No Django é chamado de signals

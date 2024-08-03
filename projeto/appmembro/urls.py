@@ -18,8 +18,8 @@ urlpatterns = [
 
    path('minhas-submissoes', SubmissaoListView.as_view(), name='appmembro_submissao_list'),
    path('minhas-submissoes/cad/', SubmissaoCreateView.as_view(), name='appmembro_submissao_create'),
-   path('minhas-submissoes/pendente/<slug:slug>/', SubmissaoPendenteUpdateView.as_view(), name='appmembro_submissao_pendente_update'),
-   path('minhas-submissoes/aprovado/<slug:slug>/', SubmissaoAprovadoUpdateView.as_view(), name='appmembro_submissao_aprovado_update'),
+   # path('minhas-submissoes/pendente/<slug:slug>/', SubmissaoPendenteUpdateView.as_view(), name='appmembro_submissao_pendente_update'),
+   # path('minhas-submissoes/aprovado/<slug:slug>/', SubmissaoAprovadoUpdateView.as_view(), name='appmembro_submissao_aprovado_update'),
    path('minhas-submissoes/<slug:slug>/', SubmissaoUpdateView.as_view(), name='appmembro_submissao_update'),
    path('minhas-submissoes/<slug:slug>/delete/', SubmissaoDeleteView.as_view(), name='appmembro_submissao_delete'),
 

@@ -148,8 +148,8 @@ class SubmissaoCreateView(LoginRequiredMixin, MembroRequiredMixin, CreateView):
 
 class SubmissaoUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
     model = Submissao
-    form_class = SubmissaoForm
     template_name = 'appmembro/submissao_form.html'
+    form_class = SubmissaoForm
     success_url = 'appmembro_submissao_list'
     
     def form_valid(self, form):
@@ -186,6 +186,7 @@ class SubmissaoPendenteUpdateView(LoginRequiredMixin, MembroRequiredMixin, Updat
     def get_success_url(self):
         return reverse(self.success_url)
     
+
 class SubmissaoAprovadoUpdateView(LoginRequiredMixin, UpdateView):
     model = Submissao
     fields = ['arquivo_comite_etica', 'arquivo_relatorio_parcial', 'arquivo_relatorio_final', 
@@ -233,7 +234,7 @@ class SubmissaoDeleteView(LoginRequiredMixin, MembroRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         try:
-            submissao = Submissao.objects.get(id=kwargs['pk'])
+            submissao = Submissao.objects.get(slug=kwargs['slug'])
             if submissao.responsavel != request.user:
                 raise Exception('Você não tem permissão para deletar esta submissão!')
         except Exception as e:
