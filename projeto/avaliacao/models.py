@@ -12,7 +12,6 @@ from decimal import Decimal
 
 from utils.gerador_hash import gerar_hash 
 
-
 #NOTA; colocar campo para liberar avaliação/banca ao aluno/professores ou por data
 
 class Avaliacao(models.Model):
@@ -32,43 +31,48 @@ class Avaliacao(models.Model):
     
     avaliador_responsavel = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador 1 *', related_name='avaliador_responsavel', on_delete=models.PROTECT)
     avaliador_suplente = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador 2 *', related_name='avaliador_suplente', null=True, blank=True, on_delete=models.PROTECT)
-    avaliador_convidado = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador CONVIDADO', related_name='avaliador_convidado', null=True, blank=True, on_delete=models.PROTECT)
-    
+    avaliador_convidado = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador 3', related_name='avaliador_convidado', null=True, blank=True, on_delete=models.PROTECT)
     
     parecer_liberado = models.CharField('Coordenador, você libera o parecer ao autor?', max_length=4, choices=CONCORDA, null=True,blank=True, default='NÃO')
     
     #Campos de parecer avaliador responsavel
-    dt_avaliacao_responsavel = models.DateTimeField(_('Data da avaliação do avaliador 1'), null=True, blank=True)
-    parecer_avaliador_responsavel = models.TextField(_('Parecer do avaliador 1 (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_responsavel = models.TextField(_('Parecer de rebanca do avaliador 1 (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    merito_desenvolvimento_responsavel = models.DecimalField(_('Desenvolvimento'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_responsavel = models.DecimalField(_('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_responsavel = models.DecimalField(_('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    nota_final_responsavel = models.DecimalField(_('Final Avaliador 1'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
-    arquivo_corrigido_responsavel = models.FileField(_(u'Arquivo do TCC corrigido pelo avaliador 1'), null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
+    dt_avaliacao_responsavel = models.DateTimeField('Data da avaliação do avaliador 1', null=True, blank=True)
+    parecer_avaliador_responsavel = models.TextField('Parecer do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    
+    merito_relevancia_responsavel = models.DecimalField('Relevância: O artigo aborda um problema atual e relevante em alguma das áreas especificadas para o evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_contribuicao_responsavel = models.DecimalField('Relevância: O artigo aborda um problema atual e relevante em alguma das áreas especificadas para o evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    
+    merito_desenvolvimento_responsavel = models.DecimalField('Desenvolvimento',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_responsavel = models.DecimalField('Redação do texto',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_responsavel = models.DecimalField('Apresentação',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    
+    nota_final_responsavel = models.DecimalField('Final Avaliador 1',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    arquivo_corrigido_responsavel = models.FileField('Arquivo do artigo corrigido pelo avaliador 1', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #Campos de parecer avaliador suplente
-    dt_avaliacao_suplente = models.DateTimeField(_('Data da avaliação do avaliador 2'), null=True, blank=True)
-    parecer_avaliador_suplente = models.TextField(_('Parecer do avaliador 2 (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_suplente = models.TextField(_('Parecer de rebanca do avaliador 2 (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    merito_desenvolvimento_suplente = models.DecimalField(_('Desenvolvimento'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_suplente = models.DecimalField(_('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_suplente = models.DecimalField(_('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    nota_final_suplente = models.DecimalField(_('Final Avaliador 2'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
-    arquivo_corrigido_suplente = models.FileField(_(u'Arquivo do TCC corrigido pelo avaliador 2'), null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
+    dt_avaliacao_suplente = models.DateTimeField('Data da avaliação do avaliador 2', null=True, blank=True)
+    parecer_avaliador_suplente = models.TextField('Parecer do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_suplente = models.TextField('Parecer de REAVALIAÇÃO do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+   
+    merito_desenvolvimento_suplente = models.DecimalField('Desenvolvimento',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_suplente = models.DecimalField('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_suplente = models.DecimalField('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    nota_final_suplente = models.DecimalField('Final Avaliador 2'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    arquivo_corrigido_suplente = models.FileField('Arquivo do artigo corrigido pelo avaliador 2'), null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #campos de parecer avaliador convidado
-    dt_avaliacao_convidado = models.DateTimeField(_('Data da avaliação do convidado'), null=True, blank=True)
-    parecer_avaliador_convidado = models.TextField(_('Parecer do avaliador convidado (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_convidado = models.TextField(_('Parecer de rebanca do avaliador convidado (5000 caracteres)'), max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    merito_desenvolvimento_convidado = models.DecimalField(_('Desenvolvimento'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_convidado = models.DecimalField(_('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_convidado = models.DecimalField(_('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    nota_final_convidado = models.DecimalField(_('Final Avaliador Convidado'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
-    arquivo_corrigido_convidado = models.FileField(_(u'Arquivo do TCC corrigido pelo avaliador convidado'), null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
+    dt_avaliacao_convidado = models.DateTimeField('Data da avaliação do avaliador 3', null=True, blank=True)
+    parecer_avaliador_convidado = models.TextField('Parecer do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_convidado = models.TextField('Parecer de REAVALIAÇÃO do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    merito_desenvolvimento_convidado = models.DecimalField('Desenvolvimento'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_convidado = models.DecimalField('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_convidado = models.DecimalField('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    nota_final_convidado = models.DecimalField('Final Avaliador 3'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    arquivo_corrigido_convidado = models.FileField('u''Arquivo do artigo corrigido pelo avaliador 3', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
-    media_final_avaliacao = models.DecimalField(_('Média Final'),help_text='Máximo 10 pontos', default = 0, max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True)    
-    intercorrencias = models.TextField(_('Intercorrências do processo de avaliação (20000 caracteres)'), max_length=20000, null=True, blank=True, help_text='Coordenador, use esse espaço para anotar qualquer intercorrência do processo de avaliação!')
+    media_final_avaliacao = models.DecimalField('Média Final',help_text='Máximo 10 pontos', default = 0, max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True)    
+    intercorrencias = models.TextField('Intercorrências do processo de avaliação (20000 caracteres)', max_length=20000, null=True, blank=True, help_text='Coordenador, use esse espaço para anotar qualquer intercorrência do processo de avaliação!')
     
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
     
@@ -114,22 +118,22 @@ class Avaliacao(models.Model):
     def get_avaliacao_coordenador_suplente_url(self):
         return reverse('minha_avaliacao_suplente', kwargs={'slug': self.slug})
 
-    # para appprofessor
+    # para appmembro
     @property
     def get_avaliacao_orientador_url(self):
-        return reverse('appprofessor_minha_avaliacao_orientador', kwargs={'slug': self.slug})
+        return reverse('appmembro_minha_avaliacao_orientador', kwargs={'slug': self.slug})
   
     @property
     def get_avaliacao_responsavel_url(self):
-        return reverse('appprofessor_minha_avaliacao_responsavel', kwargs={'slug': self.slug})
+        return reverse('appmembro_minha_avaliacao_responsavel', kwargs={'slug': self.slug})
 
     @property
     def get_avaliacao_suplente_url(self):
-        return reverse('appprofessor_minha_avaliacao_suplente', kwargs={'slug': self.slug})
+        return reverse('appmembro_minha_avaliacao_suplente', kwargs={'slug': self.slug})
     
     @property
     def get_avaliacao_convidado_url(self):
-        return reverse('appprofessor_minha_avaliacao_convidado', kwargs={'slug': self.slug})
+        return reverse('appmembro_minha_avaliacao_convidado', kwargs={'slug': self.slug})
 
     @property
     def get_media_atualizada(self):
@@ -148,7 +152,7 @@ class Avaliacao(models.Model):
     
     @property
     def get_parecer_liberado_orientador_url(self):
-        return reverse('appprofessor_avaliacao_parecer_detail', kwargs={'slug': self.slug})
+        return reverse('appmembro_avaliacao_parecer_detail', kwargs={'slug': self.slug})
 
     @property
     def get_parecer_impressao_url(self):
@@ -166,25 +170,3 @@ class Avaliacao(models.Model):
     def get_meu_parecer_impressao_url(self):
         return reverse('minha_avaliacao_pdf', kwargs={'slug': self.slug})
     
-    
-    # @property
-    # def get_parecer_create_update_url(self):
-    #     """
-    #         Se existe um parecer na comissão para esta avaliação,
-    #         retornar a url de edicao deste parecer
-    #         caso contrario, envia para a tela de criacao
-    #         de um parecer, passando o id da avaliacao como
-    #         parametro GET
-    #     """
-    #     try:
-    #         return self.get_parecer.get_absolute_url
-    #     except:
-    #         return '%s?avaliacao_id=%d' % (reverse('comissao_create'), self.id)
-
-    
-    # @property
-    # def get_parecer_final(self):
-    #     objetos = Comissao.objects.filter(avaliacao_comissao__submissao=self.submissao)
-    #     if (objetos):
-    #         return objetos[0].arquivo_parecer_comissao_final
-    #     return None
