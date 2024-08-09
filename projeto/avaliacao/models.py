@@ -12,7 +12,7 @@ from decimal import Decimal
 
 from utils.gerador_hash import gerar_hash 
 
-#NOTA; colocar campo para liberar avaliação/banca ao aluno/professores ou por data
+#NOTA; colocar campo para liberar avaliação/banca ao autor ou por data
 
 class Avaliacao(models.Model):
     #1 campo da tupla fica no banco de dados
@@ -22,11 +22,6 @@ class Avaliacao(models.Model):
         ('NÃO', 'Não'),
     )
     
-    CONCORDA_APTO = (
-        ('SIM', 'Sim'),
-        ('NÃO', 'Não'),
-        ('NÃO INFORMADO', 'Não informado')
-    )
     submissao = models.OneToOneField('submissao.Submissao', verbose_name='Selecione um artigo submetido para avaliação *', on_delete=models.PROTECT)
     
     avaliador_responsavel = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador 1 *', related_name='avaliador_responsavel', on_delete=models.PROTECT)
@@ -38,7 +33,7 @@ class Avaliacao(models.Model):
     #Campos de parecer avaliador responsavel
     dt_avaliacao_responsavel = models.DateTimeField('Data da avaliação do avaliador 1', null=True, blank=True)
     parecer_avaliador_responsavel = models.TextField('Parecer do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     
     merito_relevancia_responsavel = models.DecimalField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_responsavel = models.DecimalField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -49,17 +44,17 @@ class Avaliacao(models.Model):
     merito_resultados_responsavel = models.DecimalField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_responsavel = models.DecimalField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    merito_desenvolvimento_responsavel = models.DecimalField('Desenvolvimento',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_responsavel = models.DecimalField('Redação do texto',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_responsavel = models.DecimalField('Apresentação',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_desenvolvimento_responsavel = models.DecimalField('Desenvolvimento',help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_responsavel = models.DecimalField('Redação do texto',help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_responsavel = models.DecimalField('Apresentação',help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
     
-    nota_final_responsavel = models.DecimalField('Final Avaliador 1',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    nota_final_responsavel = models.DecimalField('Final Avaliador 1',help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
     arquivo_corrigido_responsavel = models.FileField('Arquivo do artigo corrigido pelo avaliador 1', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #Campos de parecer avaliador suplente
     dt_avaliacao_suplente = models.DateTimeField('Data da avaliação do avaliador 2', null=True, blank=True)
     parecer_avaliador_suplente = models.TextField('Parecer do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_suplente = models.TextField('Parecer de REAVALIAÇÃO do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_suplente = models.TextField('Parecer de REAVALIAÇÃO do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
    
     merito_relevancia_suplente = models.DecimalField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_suplente = models.DecimalField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -70,17 +65,17 @@ class Avaliacao(models.Model):
     merito_resultados_suplente = models.DecimalField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_suplente = models.DecimalField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    merito_desenvolvimento_suplente = models.DecimalField('Desenvolvimento',help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_suplente = models.DecimalField('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_suplente = models.DecimalField('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_desenvolvimento_suplente = models.DecimalField('Desenvolvimento',help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_suplente = models.DecimalField('Redação do texto'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_suplente = models.DecimalField('Apresentação'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
     
-    nota_final_suplente = models.DecimalField('Final Avaliador 2'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    nota_final_suplente = models.DecimalField('Final Avaliador 2'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
     arquivo_corrigido_suplente = models.FileField('Arquivo do artigo corrigido pelo avaliador 2'), null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #campos de parecer avaliador convidado
     dt_avaliacao_convidado = models.DateTimeField('Data da avaliação do avaliador 3', null=True, blank=True)
     parecer_avaliador_convidado = models.TextField('Parecer do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_convidado = models.TextField('Parecer de REAVALIAÇÃO do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_convidado = models.TextField('Parecer de REAVALIAÇÃO do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     
     merito_relevancia_convidado = models.DecimalField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_convidado = models.DecimalField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -91,14 +86,14 @@ class Avaliacao(models.Model):
     merito_resultados_convidado = models.DecimalField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_convidado = models.DecimalField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?',help_text='De 0 a 5', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text=' Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    merito_desenvolvimento_convidado = models.DecimalField('Desenvolvimento'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_redacao_convidado = models.DecimalField('Redação do texto'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
-    merito_apresentacao_convidado = models.DecimalField('Apresentação'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_desenvolvimento_convidado = models.DecimalField('Desenvolvimento'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_redacao_convidado = models.DecimalField('Redação do texto'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
+    merito_apresentacao_convidado = models.DecimalField('Apresentação'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)
     
-    nota_final_convidado = models.DecimalField('Final Avaliador 3'),help_text='Máximo 10 pontos', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
+    nota_final_convidado = models.DecimalField('Final Avaliador 3'),help_text='De 0 a 5', max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True, default = 0)    
     arquivo_corrigido_convidado = models.FileField('u''Arquivo do artigo corrigido pelo avaliador 3', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
-    media_final_avaliacao = models.DecimalField('Média Final',help_text='Máximo 10 pontos', default = 0, max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True)    
+    media_final_avaliacao = models.DecimalField('Média Final',help_text='De 0 a 5', default = 0, max_digits=4, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10)], null=True, blank=True)    
     intercorrencias = models.TextField('Intercorrências do processo de avaliação (20000 caracteres)', max_length=20000, null=True, blank=True, help_text='Coordenador, use esse espaço para anotar qualquer intercorrência do processo de avaliação!')
     
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
@@ -114,7 +109,7 @@ class Avaliacao(models.Model):
     }
     
     class Meta:
-        ordering = ['submissao__turma','submissao__aluno__nome']
+        ordering = ['submissao__evento','submissao__responsavel__nome']
 
     def __str__(self):
         return '%s' % (self.submissao)

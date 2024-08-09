@@ -23,9 +23,9 @@ from .models import Avaliacao
 
 from .forms import AvaliacaoForm, BuscaAvaliacaoForm
 
-from appprofessor.forms import MinhaAvaliacaoOrientadorForm
-from appprofessor.forms import MinhaAvaliacaoResponsavelForm
-from appprofessor.forms import MinhaAvaliacaoSuplenteForm
+from appmembro.forms import MinhaAvaliacaoOrientadorForm
+from appmembro.forms import MinhaAvaliacaoResponsavelForm
+from appmembro.forms import MinhaAvaliacaoSuplenteForm
 
 from submissao.models import Submissao
 
@@ -53,23 +53,15 @@ class AvaliacaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
             form = BuscaAvaliacaoForm()
             
         if form.is_valid():
-            nome_aluno = form.cleaned_data.get('nome_aluno')
-            curso = form.cleaned_data.get('curso')
-            turma = form.cleaned_data.get('turma')
-            nome_orientador = form.cleaned_data.get('nome_orientador')
+            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
 
-            if nome_aluno:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_aluno)
+            if nome_responsavel:
+                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
                 
-            if curso:
-                qs = qs.filter(submissao__turma__curso=curso)
-
-            if turma:
-                qs = qs.filter(submissao__turma=turma) 
-
-            if nome_orientador:
-                qs = qs.filter(submissao__orientador__nome__icontains=nome_orientador)
+            if evento:
+                qs = qs.filter(submissao__evento=evento) 
 
             if nome_avaliador:
                 qs = qs.filter(Q(avaliador_responsavel__nome__icontains=nome_avaliador) | Q(avaliador_suplente__nome__icontains=nome_avaliador) | Q(avaliador_convidado__nome__icontains=nome_avaliador))
@@ -95,7 +87,6 @@ class AvaliacaoAndamentoListView(LoginRequiredMixin, CoordenadorRequiredMixin, L
         # qs = Avaliacao.objects.all()
         qs = Avaliacao.objects.all().filter(submissao__status = 'EM ANDAMENTO')
 
-        
         if self.request.GET:
             #quando ja tem dado filtrando
             form = BuscaAvaliacaoForm(data=self.request.GET)
@@ -104,23 +95,15 @@ class AvaliacaoAndamentoListView(LoginRequiredMixin, CoordenadorRequiredMixin, L
             form = BuscaAvaliacaoForm()
 
         if form.is_valid():
-            nome_aluno = form.cleaned_data.get('nome_aluno')
-            curso = form.cleaned_data.get('curso')
-            turma = form.cleaned_data.get('turma')
-            nome_orientador = form.cleaned_data.get('nome_orientador')
+            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_aluno:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_aluno)
-                
-            if curso:
-                qs = qs.filter(submissao__turma__curso=curso)
+            if nome_responsavel:
+                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
 
-            if turma:
-                qs = qs.filter(submissao__turma=turma)
-                
-            if nome_orientador:
-                qs = qs.filter(submissao__orientador__nome__icontains=nome_orientador)
+            if evento:
+                qs = qs.filter(submissao__evento=evento)
     
             if nome_avaliador:				
                 qs = qs.filter(Q(avaliador_responsavel__nome__icontains=nome_avaliador) | Q(avaliador_suplente__nome__icontains=nome_avaliador) | Q(avaliador_convidado__nome__icontains=nome_avaliador))
@@ -156,23 +139,15 @@ class AvaliacaoMinhasAndamentoListView(LoginRequiredMixin, ListView):
             form = BuscaAvaliacaoForm()
 
         if form.is_valid():
-            nome_aluno = form.cleaned_data.get('nome_aluno')
-            curso = form.cleaned_data.get('curso')
-            turma = form.cleaned_data.get('turma')
-            nome_orientador = form.cleaned_data.get('nome_orientador')
+            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_aluno:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_aluno)
-                
-            if curso:
-                qs = qs.filter(submissao__turma__curso=curso)
+            if nome_responsavel:
+                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
 
-            if turma:
-                qs = qs.filter(submissao__turma=turma)
-                
-            if nome_orientador:
-                qs = qs.filter(submissao__orientador__nome__icontains=nome_orientador)
+            if evento:
+                qs = qs.filter(submissao__evento=evento)
     
             if nome_avaliador:				
                 qs = qs.filter(Q(avaliador_responsavel__nome__icontains=nome_avaliador) | Q(avaliador_suplente__nome__icontains=nome_avaliador) | Q(avaliador_convidado__nome__icontains=nome_avaliador))
@@ -205,23 +180,15 @@ class AvaliacaoImpressaoListView(LoginRequiredMixin, SecretariaCoordenadorAdmini
             form = BuscaAvaliacaoForm()
             
         if form.is_valid():
-            nome_aluno = form.cleaned_data.get('nome_aluno')
-            curso = form.cleaned_data.get('curso')
-            turma = form.cleaned_data.get('turma')
-            nome_orientador = form.cleaned_data.get('nome_orientador')
+            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_aluno:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_aluno)
-                
-            if curso:
-                qs = qs.filter(submissao__turma__curso=curso)
+            if nome_responsavel:
+                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
 
-            if turma:
-                qs = qs.filter(submissao__turma=turma)
-                
-            if nome_orientador:
-                qs = qs.filter(submissao__orientador__nome__icontains=nome_orientador)
+            if evento:
+                qs = qs.filter(submissao__evento=evento)
     
             if nome_avaliador:				
                 qs = qs.filter(Q(avaliador_responsavel__nome__icontains=nome_avaliador) | Q(avaliador_suplente__nome__icontains=nome_avaliador) | Q(avaliador_convidado__nome__icontains=nome_avaliador))
@@ -241,7 +208,7 @@ class AvaliacaoMinhaCoordenacaoListView(LoginRequiredMixin, CoordenadorRequiredM
     def get_queryset(self):
         qs = super().get_queryset()
         
-        return qs.filter(submissao__turma__professor=self.request.user)
+        return qs.filter(submissao__evento__coordenador=self.request.user)
 
 
 class AvaliacaoCreateView(LoginRequiredMixin, CoordenadorRequiredMixin, CreateView):

@@ -11,7 +11,7 @@
 {% block content %}
 
 <div class="alert alert-info">
-  <strong>Coordenador, atenção!!</strong> Use esse formulário somente para acompanhar, regularizar ou atualizar avaliações de outros professores.
+  <strong>Coordenador, atenção!!</strong> Use esse formulário somente para acompanhar, regularizar ou atualizar avaliações de outros membros.
 </div>  
 
 <div class="panel panel-default">
@@ -304,7 +304,7 @@
         {% bootstrap_field form.parecer_avaliador_responsavel %}
         {% if object.rebanca == 'SIM'%}
           <h3><span class="label label-warning">Rebanca</span></h3>
-          {% bootstrap_field form.parecer_rebanca_avaliador_responsavel %}
+          {% bootstrap_field form.parecer_reavaliacao_avaliador_responsavel %}
         {% endif %}
         {% bootstrap_field form.arquivo_corrigido_responsavel %}
       </div>
@@ -424,7 +424,7 @@
         {% bootstrap_field form.parecer_avaliador_suplente %}
         {% if object.rebanca == 'SIM'%}
           <h3><span class="label label-warning">Rebanca</span></h3>
-          {% bootstrap_field form.parecer_rebanca_avaliador_suplente %}
+          {% bootstrap_field form.parecer_reavaliacao_avaliador_suplente %}
         {% endif %}
         {% bootstrap_field form.arquivo_corrigido_suplente %}
       </div>
@@ -545,7 +545,7 @@
           {% bootstrap_field form.parecer_avaliador_convidado %}
           {% if object.rebanca == 'SIM'%}
             <h3><span class="label label-warning">Rebanca</span></h3>
-            {% bootstrap_field form.parecer_rebanca_avaliador_convidado %}
+            {% bootstrap_field form.parecer_reavaliacao_avaliador_convidado %}
           {% endif %}
           {% bootstrap_field form.arquivo_corrigido_convidado %}
         </div>

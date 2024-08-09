@@ -225,7 +225,7 @@
         <tr>
             {% if object.rebanca == 'SIM' %}
                 <td style="text-justify: newspaper;">
-                    {{ object.parecer_rebanca_avaliador_responsavel|linebreaks }}
+                    {{ object.parecer_reavaliacao_avaliador_responsavel|linebreaks }}
                 </td>
             {% else %}
                 <td style="text-justify: newspaper;">
@@ -353,7 +353,7 @@
         <tr>
             {% if object.rebanca == 'SIM' %}
                 <td style="text-justify: newspaper;">
-                    {{ object.parecer_rebanca_avaliador_suplente|linebreaks }}
+                    {{ object.parecer_reavaliacao_avaliador_suplente|linebreaks }}
                 </td>
             {% else %}
                 <td style="text-justify: newspaper;">
@@ -482,7 +482,7 @@
             <tr>
                 {% if object.rebanca == 'SIM' %}
                     <td style="text-justify: newspaper;">
-                        {{ object.parecer_rebanca_avaliador_convidado|linebreaks }}
+                        {{ object.parecer_reavaliacao_avaliador_convidado|linebreaks }}
                     </td>
                 {% else %}
                     <td style="text-justify: newspaper;">

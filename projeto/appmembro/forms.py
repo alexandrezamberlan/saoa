@@ -51,7 +51,7 @@ class SubmissaoForm(forms.ModelForm):
     #     responsavel = self.cleaned_data.get('responsavel')
 
     #     if (responsavel in colaborador.all()):
-    #         raise forms.ValidationError('Um professor não pode ser ao mesmo tempo responsável e colaborador')
+    #         raise forms.ValidationError('Um membro não pode ser ao mesmo tempo responsável e colaborador')
     #     return colaborador
 
 
