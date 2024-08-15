@@ -89,8 +89,8 @@
 							{% endif %}
 						</td>
 						<td class="text-center">
-							{% if submissao.avaliacao.comissao %}
-								{{ submissao.avaliacao.comissao.get_status_display|upper }}
+							{% if submissao.status == 'APROVADO' %}
+								{{ submissao.get_status_display|upper }}
 							{% elif submissao.avaliacao %}
 								EM ANÁLISE
 							{% else %}
