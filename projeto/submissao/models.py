@@ -6,6 +6,8 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 
+from avaliacao.models import Avaliacao 
+
 from utils.gerador_hash import gerar_hash
 
 class SubmissaoAtivoManager(models.Manager):
@@ -78,6 +80,27 @@ class Submissao(models.Model):
     @property
     def get_delete_appmembro_url(self):
         return reverse('appmembro_submissao_delete', kwargs={'slug': self.slug})
+    
+    @property
+    def get_avaliacao(self):
+        try:
+            return Avaliacao.objects.get(submissao=self)
+        except:
+            return None
+
+    @property
+    def get_avaliacao_create_update_url(self):
+        """
+            Se existe uma avaliacao para esta submissao,
+            retornar a url de edicao desta avaliacao
+            caso contrario, envia para a tela de criacao
+            de uma avaliacao, passando o id da submissao como
+            parametro GET
+        """
+        try:
+            return self.get_avaliacao.get_absolute_url
+        except:
+            return '%s?submissao_id=%d' % (reverse('avaliacao_create'), self.id)
 
 
 #triggers para limpeza dos arquivos apagados ou alterados. No Django é chamado de signals

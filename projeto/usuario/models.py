@@ -23,6 +23,7 @@ class CoordenadorAtivoManager(UserManager):
     def get_queryset(self):
         return super().get_queryset().filter(Q(tipo='COORDENADOR') | Q(tipo='ADMINISTRADOR'), is_active=True)
     
+
 class MembroAtivoManager(UserManager):
     def get_queryset(self):
         return super().get_queryset().filter(tipo='MEMBRO', is_active=True)

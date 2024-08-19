@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import AvaliacaoListView, AvaliacaoAndamentoListView, MinhaAvaliacaoListView, AvaliacaoMinhaCoordenacaoListView, AvaliacaoPdfView
+from .views import AvaliacaoListView, AvaliacaoAndamentoListView, MinhaAvaliacaoListView, AvaliacaoMinhaCoordenacaoListView #, AvaliacaoPdfView
 from .views import AvaliacaoUpdateView, AvaliacaoDeleteView, AvaliacaoCreateView, AvaliacaoDetailView, AvaliacaoImpressaoListView
-from .views import AvaliacaoTermoBancaPdfView, AvaliacaoTermoBibliotecaPdfView, AvaliacaoMinhasAndamentoListView
+from .views import AvaliacaoMinhasAndamentoListView#, AvaliacaoTermoBancaPdfView, AvaliacaoTermoBibliotecaPdfView
 from .views import MinhaAvaliacaoOrientadorUpdateView, MinhaAvaliacaoResponsavelUpdateView, MinhaAvaliacaoSuplenteUpdateView
 
 urlpatterns = [
@@ -23,7 +23,7 @@ urlpatterns = [
 
 	path('<slug:slug>/delete/', AvaliacaoDeleteView.as_view(), name='avaliacao_delete'),
 	
- 	path('<slug:slug>/pdf/', AvaliacaoPdfView.as_view(), name='avaliacao_pdf'),
-	path('<slug:slug>/pdf-banca/', AvaliacaoTermoBancaPdfView.as_view(), name='avaliacao_termobanca_pdf'),
-	path('<slug:slug>/pdf-biblioteca/', AvaliacaoTermoBibliotecaPdfView.as_view(), name='avaliacao_termobiblioteca_pdf'),
+ 	# path('<slug:slug>/pdf/', AvaliacaoPdfView.as_view(), name='avaliacao_pdf'),
+	# path('<slug:slug>/pdf-banca/', AvaliacaoTermoBancaPdfView.as_view(), name='avaliacao_termobanca_pdf'),
+	# path('<slug:slug>/pdf-biblioteca/', AvaliacaoTermoBibliotecaPdfView.as_view(), name='avaliacao_termobiblioteca_pdf'),
 ]

@@ -50,8 +50,7 @@ class SubmissaoListView(LoginRequiredMixin, ListView):
                 
             if pesquisa:
                 qs = qs.filter(Q(evento__coordenador__nome__icontains=pesquisa) | Q(evento__nome__icontains=pesquisa) | Q(titulo__icontains=pesquisa) | Q(resumo__icontains=pesquisa) | Q(responsavel__nome__icontains=pesquisa))
-                
-            
+                            
         return qs
  
 
@@ -91,7 +90,7 @@ class SubmissaoDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
         success URL. If the object is protected, send an error message.
         """
         self.object = self.get_object()
-        success_url = self.get_success_url()
+        # success_url = self.get_success_url()
         try:
             self.object.delete()
         except Exception as e:

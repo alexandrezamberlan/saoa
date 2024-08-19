@@ -15,9 +15,9 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from easy_pdf.views import PDFTemplateResponseMixin
+# from easy_pdf.views import PDFTemplateResponseMixin
 
-from utils.decorators import LoginRequiredMixin, CoordenadorRequiredMixin, SecretariaCoordenadorAdministradorRequiredMixin
+from utils.decorators import LoginRequiredMixin, CoordenadorRequiredMixin
 
 from .models import Avaliacao
 
@@ -156,7 +156,7 @@ class AvaliacaoMinhasAndamentoListView(LoginRequiredMixin, ListView):
 
 
 
-class AvaliacaoImpressaoListView(LoginRequiredMixin, SecretariaCoordenadorAdministradorRequiredMixin, ListView):
+class AvaliacaoImpressaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
     model = Avaliacao   
     template_name = 'avaliacao/impressao_avaliacao_list.html'
     
@@ -374,16 +374,16 @@ class AvaliacaoDetailView(LoginRequiredMixin, DetailView):
     success_url = 'avaliacao_andamento_list'
     
     
-class AvaliacaoPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
-    model = Avaliacao
-    template_name = 'avaliacao/impressoes/avaliacao_pdf.html'
+# class AvaliacaoPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
+#     model = Avaliacao
+#     template_name = 'avaliacao/impressoes/avaliacao_pdf.html'
     
     
-class AvaliacaoTermoBancaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
-    model = Avaliacao
-    template_name = 'avaliacao/impressoes/avaliacao_termobanca_pdf.html'
+# class AvaliacaoTermoBancaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
+#     model = Avaliacao
+#     template_name = 'avaliacao/impressoes/avaliacao_termobanca_pdf.html'
     
-class AvaliacaoTermoBibliotecaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
-    model = Avaliacao
-    template_name = 'avaliacao/impressoes/avaliacao_termobiblioteca_pdf.html'
+# class AvaliacaoTermoBibliotecaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
+#     model = Avaliacao
+#     template_name = 'avaliacao/impressoes/avaliacao_termobiblioteca_pdf.html'
     

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     
     'appmembro',
+    'avaliacao',
     'aviso',
     'evento',
     'instituicao',
