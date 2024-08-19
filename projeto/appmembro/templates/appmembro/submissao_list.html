@@ -29,7 +29,6 @@
 		</div>
 	</div>
 
-	
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead>
@@ -48,7 +47,11 @@
 					<tr>
 						<td>
 							{{ submissao.evento.nome }}<br>
-							<small>Coord.: {{ submissao.evento.coordenador }}</small>
+							<small>
+								Coord.: {{ submissao.evento.coordenador }}<br>
+								Data limite: {{ submissao.evento.data_limite_trabalhos|date:'d/m/Y' }}
+							<small>
+
 						</td>
 						<td>
 							{{ submissao.titulo }}<br>
@@ -89,22 +92,12 @@
 							{% endif %}
 						</td>
 						<td class="text-center">
-							{% if submissao.status == 'APROVADO' %}
-								{{ submissao.get_status_display|upper }}
-							{% elif submissao.avaliacao %}
-								EM ANÁLISE
-							{% else %}
-								EM EDIÇÃO
-							{% endif %}
+							{{ submissao.get_status_display|upper }}							
 						</td>						
 						<td class="text-center">
 							<span data-toggle="tooltip"  title='Parecer avaliador 1'>
 								{% if submissao.get_segundo_arquivo_parecer_comissao %}
 									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
-										{% bootstrap_icon 'download' %}
-									</a>
-								{% else %}
-									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
 										{% bootstrap_icon 'download' %}
 									</a>
 								{% endif %}
@@ -114,31 +107,36 @@
 									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
 										{% bootstrap_icon 'download' %}
 									</a>
-								{% else %}
-									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-										{% bootstrap_icon 'download' %}
-									</a>
 								{% endif %}
 							</span>
 							<span data-toggle="tooltip"  title='Parecer avaliador 3'>
 								{% if submissao.get_segundo_arquivo_parecer_comissao %}
 									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
 										{% bootstrap_icon 'download' %}
-									</a>
-								{% else %}
-									<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-										{% bootstrap_icon 'download' %}
-									</a>
+									</a>								
 								{% endif %}
 							</span>
 						</td>
-						
-						<td class="text-center">
-							{% bootstrap_button content='' href=submissao.get_appmembro_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
-						</td>
-						<td class="text-center">
-							{% bootstrap_button content='' href=submissao.get_delete_appmembro_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
-						</td>
+						{% if submissao.status == 'EM EDICAO' %}
+							<td class="text-center">
+								{% bootstrap_button content='' href=submissao.get_appmembro_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
+							</td>
+							<td class="text-center">
+								{% bootstrap_button content='' href=submissao.get_delete_appmembro_url button_type='link' icon='trash' button_class='btn btn-danger' size='sm' %}
+							</td>
+						{% else %}
+							<td class="text-center">
+								<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+									{% bootstrap_icon 'edit' %}
+								</a>
+							</td>
+							<td class="text-center">
+								<a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+									{% bootstrap_icon 'trash' %}
+								</a>
+							</td>
+
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>

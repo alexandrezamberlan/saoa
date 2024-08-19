@@ -5,13 +5,17 @@ import os
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
-
+from django.utils import timezone
 
 from utils.gerador_hash import gerar_hash
 
 class EventoAtivoManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
+    
+class EventoAtivoComDataAbertaManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True, data_limite_trabalhos__gte=timezone.now().date())
 
 
 class Evento(models.Model):       
@@ -32,6 +36,7 @@ class Evento(models.Model):
 
     objects = models.Manager()
     eventos_ativos = EventoAtivoManager()
+    eventos_ativos_data_aberta = EventoAtivoComDataAbertaManager()
 
     class Meta:
         ordering            =   ['-is_active','-data_limite_trabalhos','nome']
@@ -47,6 +52,10 @@ class Evento(models.Model):
         self.nome = self.nome.upper()
         self.modelo_artigo = self.modelo_artigo.upper()        
         super(Evento, self).save(*args, **kwargs)
+        
+    @property
+    def get_data_atual(self):
+        return timezone.now().date()
 
     @property
     def get_absolute_url(self):

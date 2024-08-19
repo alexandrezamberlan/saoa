@@ -54,14 +54,17 @@
 						</td>
 						<td>
 							{{ submissao.responsavel }}<br>
-							<small>Data submissão: {{ submissao.data_hora_submissao|date:"d/m/Y - H:i" }}</small>
+							<small>
+								Data submissão: {{ submissao.data_hora_submissao|date:"d/m/Y - H:i" }}<br>
+								Data alteração: {{ submissao.data_hora_alteracao_submissao|date:"d/m/Y - H:i" }}
+							</small>
 						</td>	
 						<td>
 							{{ submissao.get_status_display.upper }}
 						</td>
 						<td>
 							{{ submissao.titulo }}<br>
-							<small>Data alteração: {{ submissao.data_hora_alteracao_submissao|date:"d/m/Y - H:i" }}</small>
+							
 						</td>
 						<td class="text-center">							
 							{% if submissao.arquivo_sem_autores %} 							

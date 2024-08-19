@@ -39,7 +39,7 @@ class MembroCreateForm(forms.ModelForm):
 
 
 class SubmissaoForm(forms.ModelForm):
-    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos)    
+    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos_data_aberta.all(), required=True)   
  
     class Meta:
         model = Submissao
