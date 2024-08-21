@@ -23,7 +23,6 @@ from .models import Avaliacao
 
 from .forms import AvaliacaoForm, BuscaAvaliacaoForm
 
-from appmembro.forms import MinhaAvaliacaoOrientadorForm
 from appmembro.forms import MinhaAvaliacaoResponsavelForm
 from appmembro.forms import MinhaAvaliacaoSuplenteForm
 

@@ -15,17 +15,14 @@ class AvaliacaoForm(forms.ModelForm):
     
     class Meta:
         model = Avaliacao
-        fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'avaliador_convidado', 'apto', 'rebanca', 'parecer_liberado', 
-                  'parecer_avaliador_orientador', 'parecer_avaliador_responsavel', 'parecer_avaliador_suplente', 'parecer_avaliador_convidado',
-                  'parecer_rebanca_avaliador_orientador', 'parecer_reavaliacao_avaliador_responsavel', 'parecer_reavaliacao_avaliador_suplente', 'parecer_reavaliacao_avaliador_convidado',
-                    'merito_acompanhamento_orientador', 'merito_desenvolvimento_orientador', 'merito_redacao_orientador', 'merito_apresentacao_orientador', 
-                    'merito_desenvolvimento_responsavel', 'merito_redacao_responsavel', 'merito_apresentacao_responsavel', 
-                    'merito_desenvolvimento_suplente', 'merito_redacao_suplente', 'merito_apresentacao_suplente', 
-                    'merito_desenvolvimento_convidado', 'merito_redacao_convidado', 'merito_apresentacao_convidado', 
+        fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'avaliador_convidado', 'parecer_liberado', 
+                    'parecer_avaliador_responsavel', 'parecer_avaliador_suplente', 'parecer_avaliador_convidado',
+                    'parecer_reavaliacao_avaliador_responsavel', 'parecer_reavaliacao_avaliador_suplente', 'parecer_reavaliacao_avaliador_convidado',
+                   
                     'intercorrencias',
-                    'nota_final_orientador', 'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
+                    'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
                     'media_final_avaliacao', 
-                    'arquivo_corrigido_orientador', 'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
+                    'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
             
     def clean_avaliador_suplente(self):
         avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')
