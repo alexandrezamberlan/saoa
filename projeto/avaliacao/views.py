@@ -244,14 +244,12 @@ class AvaliacaoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateVi
 		# print('parecer responsavel: ', avaliacao.dt_avaliacao_responsavel)
 		# print('parecer suplente: ', avaliacao.dt_avaliacao_suplente)
   
-		if (self.request.user == avaliacao.submissao.orientador):
-			avaliacao.dt_avaliacao_orientador = timezone.now()
-		elif (self.request.user == avaliacao.avaliador_responsavel):
+		if (self.request.user == avaliacao.avaliador_responsavel):
 			avaliacao.dt_avaliacao_responsavel = timezone.now()
 		elif (self.request.user == avaliacao.avaliador_suplente):
 			avaliacao.dt_avaliacao_suplente = timezone.now()
    
-		if avaliacao.dt_avaliacao_orientador or avaliacao.dt_avaliacao_responsavel or avaliacao.dt_avaliacao_suplente:
+		if avaliacao.dt_avaliacao_responsavel or avaliacao.dt_avaliacao_suplente:
 			avaliacao.parecer_liberado = 'SIM'
 
 		avaliacao.save()

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-	{% bootstrap_icon 'check' %} Avaliação de TCC - Banca
+	{% bootstrap_icon 'check' %} Avaliação de artigo
 {% endblock %}
 
 {% block content %}
@@ -412,14 +412,14 @@
     {% endif %}
 
     <!-- seção dos coordenadores -->
-    <h3>Coordenação TCC</h3>
+    <h3>Coordenação Evento</h3>
     <div class="panel panel-default" id="coordenacao">
         <div class="panel-heading">
           <h3 class="panel-title">Intercorrências e médias das avaliações</h3>
         </div>
         {% if object.avaliador_convidado %}
           <div class="panel-body">
-            <span class="label label-warning">ATENÇÃO COORDENADOR! ESTA AVALIAÇÃO POSSUI PROFESSOR CONVIDADO.</span>
+            <span class="label label-warning">ATENÇÃO COORDENADOR! ESTA AVALIAÇÃO POSSUI AVALIADOR 3.</span>
           </div>
         {% endif %}
         <div class="panel-body">
@@ -428,7 +428,6 @@
             <thead>
               <tr>
                 <th></th>
-                <th class="text-center">{{ object.submissao.orientador.nome }}</th>
                 <th class="text-center">{{ object.avaliador_responsavel.nome }}</th>
                 <th class="text-center">{{ object.avaliador_suplente.nome }}</th>
                 {% if object.avaliador_convidado %}
@@ -440,12 +439,7 @@
             <tbody>
               <tr>
                 <td>NOTA</td>
-                <td class="text-center">
-                  <div class="hidden">
-                    {{ form.nota_final_orientador }}
-                  </div>
-                  <input class="form-control" style="text-align:center" id="id_nota_final_orientador_coordenador" readonly>
-                </td>
+                
                 <td class="text-center">
                   <div class="hidden">
                     {{ form.nota_final_responsavel }}
