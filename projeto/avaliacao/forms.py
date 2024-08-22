@@ -33,8 +33,8 @@ class AvaliacaoForm(forms.ModelForm):
             if (avaliador_suplente == avaliador_responsavel):
                 raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador responsável e avaliador suplente')
 
-            if (avaliador_suplente == submissao.orientador):
-                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador e orientador')
+            if (avaliador_suplente == submissao.responsavel):
+                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
 
         return avaliador_suplente
 
@@ -42,8 +42,8 @@ class AvaliacaoForm(forms.ModelForm):
         avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')        
         submissao = self.cleaned_data.get('submissao')
         
-        if (avaliador_responsavel == submissao.orientador):
-            raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador e orientador')
+        if (avaliador_responsavel == submissao.responsavel):
+            raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
 
         return avaliador_responsavel
 

@@ -263,35 +263,6 @@ class AvaliacaoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateVi
 		return reverse(self.success_url)
 
 
-class MinhaAvaliacaoOrientadorUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
-    model = Avaliacao
-    form_class = MinhaAvaliacaoOrientadorForm
-    template_name = 'avaliacao/minha_avaliacao_orientador_form.html'
-    success_url = 'avaliacao_minhas_andamento_list'
-    
-    def get_object(self, queryset=None):
-        # Não deixa entrar no formulário de avaliação se ele não foi designado como 
-        # avaliador orientador
-        pk = self.kwargs.get('pk')
-        try:
-            obj = Avaliacao.objects.get(pk=pk, submissao__orientador=self.request.user)
-        except:
-            raise Http404("Você não foi designado como avaliador para esta submissão")
-        return obj
-
-    def form_valid(self, form):
-        # Grava a data avaliação do responsável
-        avaliacao = form.save()
-        avaliacao.dt_avaliacao_orientador = timezone.now()
-        avaliacao.parecer_liberado = 'SIM'
-        avaliacao.save()
-        return super(MinhaAvaliacaoOrientadorUpdateView, self).form_valid(form)
-
-    def get_success_url(self):
-        messages.success(self.request, 'Seu parecer como avaliador orientador foi enviado com sucesso!')
-        return reverse(self.success_url)
-
-
 class MinhaAvaliacaoResponsavelUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
     model = Avaliacao
     form_class = MinhaAvaliacaoResponsavelForm

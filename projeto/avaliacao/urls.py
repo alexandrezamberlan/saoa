@@ -3,7 +3,7 @@ from django.urls import path
 from .views import AvaliacaoListView, AvaliacaoAndamentoListView, MinhaAvaliacaoListView, AvaliacaoMinhaCoordenacaoListView #, AvaliacaoPdfView
 from .views import AvaliacaoUpdateView, AvaliacaoDeleteView, AvaliacaoCreateView, AvaliacaoDetailView, AvaliacaoImpressaoListView
 from .views import AvaliacaoMinhasAndamentoListView#, AvaliacaoTermoBancaPdfView, AvaliacaoTermoBibliotecaPdfView
-from .views import MinhaAvaliacaoOrientadorUpdateView, MinhaAvaliacaoResponsavelUpdateView, MinhaAvaliacaoSuplenteUpdateView
+from .views import MinhaAvaliacaoResponsavelUpdateView, MinhaAvaliacaoSuplenteUpdateView
 
 urlpatterns = [
     path('<slug:slug>/avaliacao-parecer-liberado/', AvaliacaoDetailView.as_view(), name='avaliacao_parecer_detail'),
@@ -17,7 +17,6 @@ urlpatterns = [
 	path('cad/', AvaliacaoCreateView.as_view(), name='avaliacao_create'),
 	path('<slug:slug>/', AvaliacaoUpdateView.as_view(), name='avaliacao_update'),
 
-	path('minhas-avaliacoes/avaliacao/<slug:slug>/orientador/', MinhaAvaliacaoOrientadorUpdateView.as_view(), name='minha_avaliacao_orientador'),
    	path('minhas-avaliacoes/avaliacao/<slug:slug>/responsavel/', MinhaAvaliacaoResponsavelUpdateView.as_view(), name='minha_avaliacao_responsavel'),
    	path('minhas-avaliacoes/avaliacao/<slug:slug>/suplente/', MinhaAvaliacaoSuplenteUpdateView.as_view(), name='minha_avaliacao_suplente'),
 
