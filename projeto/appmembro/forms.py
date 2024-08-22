@@ -62,7 +62,7 @@ class BuscaSubmissaoForm(forms.Form):
     STATUS = (
         (None, '-----------'),
         ('EM EDICAO', 'Em edição'),
-        ('EM ANALISE', 'Em análise'),
+        ('EM AVALICAO', 'Em avaliação'),
         ('EM CORRECAO', 'Em correção' ),        
         ('APROVADO', 'Aprovado' ),
         ('RETIRADO PELO RESPONSAVEL', 'Retirado pelo responsável'),

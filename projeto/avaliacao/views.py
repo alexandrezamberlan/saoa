@@ -213,7 +213,7 @@ class AvaliacaoMinhaCoordenacaoListView(LoginRequiredMixin, CoordenadorRequiredM
 class AvaliacaoCreateView(LoginRequiredMixin, CoordenadorRequiredMixin, CreateView):
 	model = Avaliacao
 	form_class = AvaliacaoForm
-	success_url = 'submissao_andamento_list'
+	success_url = 'submissao_list'
 
 	def get_initial(self):
 		initials = super().get_initial()
@@ -233,7 +233,7 @@ class AvaliacaoCreateView(LoginRequiredMixin, CoordenadorRequiredMixin, CreateVi
 class AvaliacaoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
 	model = Avaliacao
 	form_class = AvaliacaoForm
-	success_url = 'avaliacao_andamento_list'
+	success_url = 'avaliacao_list'
  
 	def form_valid(self, form):
     	#Grava a data avaliação do coordenador ou como orientador, ou como resposavel, ou como suplente
@@ -322,18 +322,21 @@ class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, CoordenadorRequiredMi
 
 
 class AvaliacaoDeleteView(LoginRequiredMixin, CoordenadorRequiredMixin, DeleteView):
-	model = Avaliacao
-	success_url = 'avaliacao_andamento_list'
-
-	def delete(self, request, *args, **kwargs):
-		self.object = self.get_object()		
-		success_url = self.get_success_url()
-		try:
-			self.object.delete()
-			messages.success(request, 'Avaliação excluída com sucesso!') 
-		except Exception as e:
-			messages.error(request, 'Há dependências ligadas à essa avaliação, permissão negada!')
-		return redirect(self.success_url)
+    model = Avaliacao
+    success_url = 'avaliacao_list'
+ 
+    def get_success_url(self):
+        messages.success(self.request, 'Avaliação excluída com sucesso!')
+        return reverse(self.success_url)
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        try:
+            self.object.delete()
+            messages.success(request, 'Avaliação excluída com sucesso!') 
+        except Exception as e:
+            messages.error(request, 'Há dependências ligadas à essa avaliação, permissão negada!')
+        return redirect(self.success_url)
 
 
 class AvaliacaoDetailView(LoginRequiredMixin, DetailView):

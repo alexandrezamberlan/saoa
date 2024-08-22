@@ -70,7 +70,7 @@
 						<td>{% bootstrap_icon 'option-vertical' %}</td>
 						<td>
 							{% if avaliacao.avaliador_responsavel %}
-								<small>{{ avaliacao.avaliador_responsavel.nome }}</small>
+								<small>{{ avaliacao.avaliador_responsavel.nome }}</small><br>
 								{% if avaliacao.nota_final_responsavel %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_responsavel|date:'d/m/Y' }}
@@ -84,7 +84,7 @@
 						</td>
 						<td>
 							{% if avaliacao.avaliador_suplente %}
-								<small>{{ avaliacao.avaliador_suplente.nome }}</small>
+								<small>{{ avaliacao.avaliador_suplente.nome }}</small><br>
 								{% if avaliacao.nota_final_suplente %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_suplente|date:'d/m/Y' }}
@@ -98,7 +98,7 @@
 						</td>
 						<td>	
 							{% if avaliacao.avaliador_convidado %}
-								<small>{{ avaliacao.avaliador_convidado.nome }}</small>
+								<small>{{ avaliacao.avaliador_convidado.nome }}</small><br>
 								{% if avaliacao.nota_final_convidado %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_convidado|date:'d/m/Y' }}

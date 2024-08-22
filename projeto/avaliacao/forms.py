@@ -23,6 +23,25 @@ class AvaliacaoForm(forms.ModelForm):
                     'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
                     'media_final_avaliacao', 
                     'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
+    
+    def clean_avaliador_convidado(self):
+        avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')
+        avaliador_suplente = self.cleaned_data.get('avaliador_suplente')
+        avaliador_convidado = self.cleaned_data.get('avaliador_convidado')
+        submissao = self.cleaned_data.get('submissao')
+
+        if avaliador_responsavel:
+            if (avaliador_convidado == avaliador_responsavel):
+                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo mais de um avaliador')
+
+        if avaliador_suplente:
+            if (avaliador_convidado == avaliador_suplente):
+                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo mais de um avaliador')
+            
+        if (avaliador_convidado == submissao.responsavel):
+            raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
+        
+        return avaliador_suplente
             
     def clean_avaliador_suplente(self):
         avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')
@@ -31,10 +50,10 @@ class AvaliacaoForm(forms.ModelForm):
 
         if avaliador_responsavel:
             if (avaliador_suplente == avaliador_responsavel):
-                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador responsável e avaliador suplente')
+                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo mais de um avaliador')
 
-            if (avaliador_suplente == submissao.responsavel):
-                raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
+        if (avaliador_suplente == submissao.responsavel):
+            raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
 
         return avaliador_suplente
 

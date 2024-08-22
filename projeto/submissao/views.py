@@ -75,24 +75,40 @@ class SubmissaoUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
         messages.success(self.request, 'Submissão atualizada com sucesso na plataforma!')
         return reverse(self.success_url) 
 
-
-class SubmissaoDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
+class SubmissaoDeleteView(LoginRequiredMixin, DeleteView):
     model = Submissao
     success_url = 'submissao_list'
-
-    def get_success_url(self):
-        messages.success(self.request, 'Submissão removida com sucesso da plataforma!')
-        return reverse(self.success_url) 
-
+    
     def delete(self, request, *args, **kwargs):
         """
         Call the delete() method on the fetched object and then redirect to the
         success URL. If the object is protected, send an error message.
         """
         self.object = self.get_object()
-        # success_url = self.get_success_url()
+        success_url = self.get_success_url()
         try:
             self.object.delete()
+            messages.success(request, 'Submissão excluída com sucesso!')
         except Exception as e:
-            messages.error(request, 'Há dependências ligadas à essa Submissão, permissão negada!')
+            messages.error(request, 'Há dependências ligadas à essa submissão, permissão negada!')
         return redirect(self.success_url)
+
+# class SubmissaoDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
+#     model = Submissao
+#     success_url = 'submissao_list'
+
+#     def get_success_url(self):
+#         messages.success(self.request, 'Submissão removida com sucesso da plataforma!')
+#         return reverse(self.success_url)    
+    
+#     def delete(self, request, *args, **kwargs):
+        
+#         print('asf asdf asdf asdf asfçljasdf çljf açsdlfj açdsfj açsldfj asçd')
+        
+#         self.object = self.get_object()
+#         try:
+#             self.object.delete()
+#             messages.success(request, 'Submissão excluída com sucesso!') 
+#         except Exception as e:
+#             messages.error(request, 'Há dependências ligadas à essa submissão, permissão negada!')
+#         return redirect(self.success_url)
