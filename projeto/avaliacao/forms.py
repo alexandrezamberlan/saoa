@@ -49,6 +49,6 @@ class AvaliacaoForm(forms.ModelForm):
 
 
 class BuscaAvaliacaoForm(forms.Form):
-    nome_responsavel = forms.CharField(label='Nome do autor responsável', required=False)
+    autor = forms.CharField(label='Nome do autor responsável', required=False)
     evento = forms.ModelChoiceField(label='Evento', queryset=Evento.objects.all(), required=False)
     nome_avaliador = forms.CharField(label='Nome do avaliador', required=False)

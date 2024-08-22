@@ -109,7 +109,7 @@ class Avaliacao(models.Model):
     }
     
     class Meta:
-        ordering = ['submissao__evento','submissao__responsavel__nome']
+        ordering = ['submissao__evento','-media_final_avaliacao', 'submissao__responsavel__nome']
 
     def __str__(self):
         return '%s' % (self.submissao)
@@ -160,9 +160,9 @@ class Avaliacao(models.Model):
     @property
     def get_media_atualizada(self):
         if  self.avaliador_convidado:
-            return (self.nota_final_orientador + self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 4
+            return (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 4
         
-        return (self.nota_final_orientador + self.nota_final_responsavel + self.nota_final_suplente) / 3
+        return (self.nota_final_responsavel + self.nota_final_suplente) / 3
 
     @property
     def get_parecer_liberado_url(self):

@@ -52,12 +52,12 @@ class AvaliacaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
             form = BuscaAvaliacaoForm()
             
         if form.is_valid():
-            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            autor = form.cleaned_data.get('autor')
             evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
 
-            if nome_responsavel:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
+            if autor:
+                qs = qs.filter(submissao__responsavel__nome__icontains=autor)
                 
             if evento:
                 qs = qs.filter(submissao__evento=evento) 
@@ -94,12 +94,12 @@ class AvaliacaoAndamentoListView(LoginRequiredMixin, CoordenadorRequiredMixin, L
             form = BuscaAvaliacaoForm()
 
         if form.is_valid():
-            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            autor = form.cleaned_data.get('autor')
             evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_responsavel:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
+            if autor:
+                qs = qs.filter(submissao__responsavel__nome__icontains=autor)
 
             if evento:
                 qs = qs.filter(submissao__evento=evento)
@@ -138,12 +138,12 @@ class AvaliacaoMinhasAndamentoListView(LoginRequiredMixin, ListView):
             form = BuscaAvaliacaoForm()
 
         if form.is_valid():
-            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            autor = form.cleaned_data.get('autor')
             evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_responsavel:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
+            if autor:
+                qs = qs.filter(submissao__responsavel__nome__icontains=autor)
 
             if evento:
                 qs = qs.filter(submissao__evento=evento)
@@ -179,12 +179,12 @@ class AvaliacaoImpressaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, L
             form = BuscaAvaliacaoForm()
             
         if form.is_valid():
-            nome_responsavel = form.cleaned_data.get('nome_responsavel')
+            autor = form.cleaned_data.get('autor')
             evento = form.cleaned_data.get('evento')
             nome_avaliador = form.cleaned_data.get('nome_avaliador')
             
-            if nome_responsavel:
-                qs = qs.filter(submissao__aluno__nome__icontains=nome_responsavel)
+            if autor:
+                qs = qs.filter(submissao__responsavel__nome__icontains=autor)
 
             if evento:
                 qs = qs.filter(submissao__evento=evento)
