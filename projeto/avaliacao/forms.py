@@ -18,7 +18,15 @@ class AvaliacaoForm(forms.ModelForm):
         fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'avaliador_convidado', 'parecer_liberado', 
                     'parecer_avaliador_responsavel', 'parecer_avaliador_suplente', 'parecer_avaliador_convidado',
                     'parecer_reavaliacao_avaliador_responsavel', 'parecer_reavaliacao_avaliador_suplente', 'parecer_reavaliacao_avaliador_convidado',
-                   
+                    'merito_relevancia_responsavel','merito_contribuicao_responsavel','merito_metodologia_responsavel',
+                    'merito_fundamentacao_responsavel','merito_clareza_responsavel','merito_referencias_responsavel',
+                    'merito_resultados_responsavel','merito_conclusao_responsavel',
+                    'merito_relevancia_suplente','merito_contribuicao_suplente','merito_metodologia_suplente',
+                    'merito_fundamentacao_suplente','merito_clareza_suplente','merito_referencias_suplente',
+                    'merito_resultados_suplente','merito_conclusao_suplente',
+                    'merito_relevancia_convidado','merito_contribuicao_convidado','merito_metodologia_convidado',
+                    'merito_fundamentacao_convidado','merito_clareza_convidado','merito_referencias_convidado',
+                    'merito_resultados_convidado','merito_conclusao_convidado',
                     'intercorrencias',
                     'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
                     'media_final_avaliacao', 
@@ -41,7 +49,7 @@ class AvaliacaoForm(forms.ModelForm):
         if (avaliador_convidado == submissao.responsavel):
             raise forms.ValidationError('Um membro não pode ser ao mesmo tempo avaliador de seu próprio trabalho')
         
-        return avaliador_suplente
+        return avaliador_convidado
             
     def clean_avaliador_suplente(self):
         avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')

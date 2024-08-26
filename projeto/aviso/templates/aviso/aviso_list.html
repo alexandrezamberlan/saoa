@@ -73,6 +73,11 @@
 					</tr>
 				{% endfor %}
 			</tbody>
+			<tfoot>
+				<th colspan="8">
+					Total de registros: {{ object_list|length }}
+				</th>
+			</tfoot>
 		</table>
 	</div>
 {% endblock %}

@@ -21,7 +21,13 @@ class Avaliacao(models.Model):
         ('SIM', 'Sim'),
         ('NÃO', 'Não'),
     )
-    
+    NOTA = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    )
     submissao = models.OneToOneField('submissao.Submissao', verbose_name='Selecione um artigo submetido para avaliação *', on_delete=models.PROTECT)
     
     avaliador_responsavel = models.ForeignKey('usuario.Usuario', verbose_name='Selecione um membro como avaliador 1 *', related_name='avaliador_responsavel', on_delete=models.PROTECT)
@@ -35,7 +41,8 @@ class Avaliacao(models.Model):
     parecer_avaliador_responsavel = models.TextField('Parecer do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     parecer_reavaliacao_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     
-    merito_relevancia_responsavel = models.DecimalField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_relevancia_responsavel = models.CharField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_length=1, choices=NOTA, null=True,blank=True)
+    # models.DecimalField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_responsavel = models.DecimalField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_metodologia_responsavel = models.DecimalField('Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_fundamentacao_responsavel = models.DecimalField('Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], null=True, blank=True, default = 0, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
