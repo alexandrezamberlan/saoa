@@ -50,11 +50,6 @@
           </a>
         {% endif %}
     </h4> 
-    {% if object %}
-      {% buttons  %}
-        <a href="#coordenacao" class="btn btn-info" role="button">Área Coordenador</a>
-      {% endbuttons %}
-    {% endif %}
   </div>
 </div>
 
@@ -102,7 +97,7 @@
         <table class="table table-condensed table-responsive">
           <thead>
             <tr>
-              <th>Critérios de Avaliação</th>
+              <th>Critérios de Avaliação | <span class="label label-info">Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.<span></th>
               <th>Avaliação (1 a 5)</th>
             </tr>
           </thead>
@@ -178,12 +173,16 @@
                 <div class="text-danger">{{ form.merito_conclusao_responsavel.errors }}</div>
               </td>
             </tr>
-            <td><b>NOTA FINAL</b></td>
-            <td>  
-              <b>
-                <input class="form-control" id="id_nota_final_responsavel" readonly>
-              </b>
-            </td>
+            <tr>
+              <td>
+                <b>MÉDIA FINAL</b>
+              </td>
+              <td>  
+                <b>
+                  <input class="form-control" id="id_nota_final_responsavel" readonly>
+                </b>
+              </td>
+            </tr>
           </tbody>
         </table>
         {% bootstrap_field form.parecer_avaliador_responsavel %}
@@ -292,12 +291,16 @@
                 <div class="text-danger">{{ form.merito_conclusao_suplente.errors }}</div>
               </td>
             </tr>
-            <td><b>NOTA FINAL</b></td>
-            <td>  
-              <b>
-                <input class="form-control" id="id_nota_final_suplente" readonly>
-              </b>
-            </td>
+            <tr>
+              <td>
+                <b>MÉDIA FINAL</b>
+              </td>
+              <td>  
+                <b>
+                  <input class="form-control" id="id_nota_final_suplente" readonly>
+                </b>
+              </td>
+            </tr>
           </tbody>
         </table>
         {% bootstrap_field form.parecer_avaliador_suplente %}
@@ -407,12 +410,16 @@
                   <div class="text-danger">{{ form.merito_conclusao_convidado.errors }}</div>
                 </td>
               </tr>
-              <td><b>NOTA FINAL</b></td>
-              <td>  
-                <b>
-                  <input class="form-control" id="id_nota_final_convidado" readonly>
-                </b>
-              </td>
+              <tr>
+                <td>
+                  <b>MÉDIA FINAL</b>
+                </td>
+                <td>  
+                  <b>
+                    <input class="form-control" id="id_nota_final_convidado" readonly>
+                  </b>
+                </td>
+              </tr>
             </tbody>
           </table>
           {% bootstrap_field form.parecer_avaliador_convidado %}
