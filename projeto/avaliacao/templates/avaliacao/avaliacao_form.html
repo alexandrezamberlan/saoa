@@ -105,10 +105,11 @@
             <tr>
               <td>
                 {{ form.merito_relevancia_responsavel.label|upper }}
-              </td>
+              </td>              
               <td>
                 {{ form.merito_relevancia_responsavel }}
                 <div class="text-danger">{{ form.merito_relevancia_responsavel.errors }}</div>
+                <input class="form-control" id="id_form.merito_relevancia_responsavel" readonly style="visibility: hidden;">
               </td>
             </tr>
             <tr>
