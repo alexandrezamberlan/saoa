@@ -59,8 +59,8 @@
 						<td>{% bootstrap_icon 'option-vertical' %}</td>
 						<td class="text-center">{{ avaliacao.submissao.get_status_display|upper }}</td>
 						<td class="text-center">
-							{% if avaliacao.get_media_atualizada %}
-								{{ avaliacao.get_media_atualizada|floatformat:1}}
+							{% if avaliacao.media_final_avaliacao %}
+								{{ avaliacao.media_final_avaliacao|floatformat:1}}
 							{% else %}
 								<span class="label label-warning">
 									Sem notas
@@ -89,6 +89,7 @@
 								{% if avaliacao.nota_final_suplente %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_suplente|date:'d/m/Y' }}
+										{{ avaliacao.nota_final_suplente }}
 									</span>
 								{% else %}
 									<span class="label label-warning">
@@ -103,6 +104,7 @@
 								{% if avaliacao.nota_final_convidado %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_convidado|date:'d/m/Y' }}
+										{{ avaliacao.nota_final_convidado }}
 									</span>
 								{% else %}
 									<span class="label label-warning">

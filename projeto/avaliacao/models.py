@@ -101,6 +101,7 @@ class Avaliacao(models.Model):
     def calcular_media_final_avaliacao(self):
         
         
+        
         if self.avaliador_convidado:
             self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
         else:
@@ -156,9 +157,9 @@ class Avaliacao(models.Model):
     @property
     def get_media_atualizada(self):
         if  self.avaliador_convidado:
-            return (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 4
+            return (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
         
-        return (self.nota_final_responsavel + self.nota_final_suplente) / 3
+        return (self.nota_final_responsavel + self.nota_final_suplente) / 2
 
     @property
     def get_parecer_liberado_url(self):

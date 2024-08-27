@@ -51,8 +51,8 @@
 								{% endif %}
 							</td>
 							<td>
-								{% if avaliacao.get_media_atualizada %}
-									{{ avaliacao.get_media_atualizada|floatformat:1}}
+								{% if avaliacao.media_final_avaliacao %}
+									{{ avaliacao.media_final_avaliacao|floatformat:1}}
 								{% else %}
 									<span class="label label-warning">
 										Sem

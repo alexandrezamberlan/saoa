@@ -18,6 +18,7 @@ class AvaliacaoForm(forms.ModelForm):
         fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'avaliador_convidado', 'parecer_liberado', 
                     'parecer_avaliador_responsavel', 'parecer_avaliador_suplente', 'parecer_avaliador_convidado',
                     'parecer_reavaliacao_avaliador_responsavel', 'parecer_reavaliacao_avaliador_suplente', 'parecer_reavaliacao_avaliador_convidado',
+                    
                     'merito_relevancia_responsavel','merito_contribuicao_responsavel','merito_metodologia_responsavel',
                     'merito_fundamentacao_responsavel','merito_clareza_responsavel','merito_referencias_responsavel',
                     'merito_resultados_responsavel','merito_conclusao_responsavel',
@@ -28,8 +29,9 @@ class AvaliacaoForm(forms.ModelForm):
                     'merito_fundamentacao_convidado','merito_clareza_convidado','merito_referencias_convidado',
                     'merito_resultados_convidado','merito_conclusao_convidado',
                     'intercorrencias',
-                    'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
-                    'media_final_avaliacao', 
+                    
+                    # 'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
+                    # 'media_final_avaliacao', 
                     'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
     
     def clean_avaliador_convidado(self):
