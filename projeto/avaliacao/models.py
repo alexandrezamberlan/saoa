@@ -92,21 +92,19 @@ class Avaliacao(models.Model):
     
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
     
-    dic_pesos = {
-        "merito_acompanhamento_orientador" : 2,
-        "merito_desenvolvimento_orientador" : 4,
-        "merito_redacao_orientador" : 3,
-        "merito_apresentacao_orientador" : 1,
-        "merito_desenvolvimento_responsavel_suplente" : 5,
-        "merito_redacao_responsavel_suplente" : 3,
-        "merito_apresentacao_responsavel_suplente" : 2,
-    }
-    
     class Meta:
         ordering = ['submissao__evento','-media_final_avaliacao', 'submissao__responsavel__nome']
 
     def __str__(self):
         return '%s' % (self.submissao)
+    
+    def calcular_media_final_avaliacao(self):
+        
+        
+        if self.avaliador_convidado:
+            self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
+        else:
+            self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente) / 2
     
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -115,7 +113,7 @@ class Avaliacao(models.Model):
         if not self.id:
             self.submissao.status = 'EM AVALIACAO'
             self.submissao.save()
-            
+        self.calcular_media_final_avaliacao()    
         super(Avaliacao, self).save(*args, **kwargs)
     
     @property

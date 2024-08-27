@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 
 {% block actions %}
@@ -6,6 +7,10 @@
 
 {% block title %}
 	{% bootstrap_icon 'check' %} Avaliação de artigo
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'avaliacao/js/avaliacao.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -109,7 +114,6 @@
               <td>
                 {{ form.merito_relevancia_responsavel }}
                 <div class="text-danger">{{ form.merito_relevancia_responsavel.errors }}</div>
-                <input class="form-control" id="id_form.merito_relevancia_responsavel" readonly style="visibility: hidden;">
               </td>
             </tr>
             <tr>
@@ -466,20 +470,20 @@
                   <div class="hidden">
                     {{ form.nota_final_responsavel }}
                   </div>
-                  <input class="form-control" style="text-align:center" id="id_nota_final_responsavel_coordenador" readonly>
+                  <input class="form-control" style="text-align:center" id="id_media_final_responsavel" readonly>
                 </td>
                 <td class="text-center">
                   <div class="hidden">
                     {{ form.nota_final_suplente }}
                   </div>
-                  <input class="form-control" style="text-align:center" id="id_nota_final_suplente_coordenador" readonly>
+                  <input class="form-control" style="text-align:center" id="id_media_final_suplente" readonly>
                 </td>
                 {% if object.avaliador_convidado %}
                   <td class="text-center">
                     <div class="hidden">
                       {{ form.nota_final_convidado }}
                     </div>
-                    <input class="form-control" style="text-align:center" id="id_nota_final_convidado_coordenador" readonly>
+                    <input class="form-control" style="text-align:center" id="id_media_final_convidado" readonly>
                   </td>
                 {% endif %}
                 <td class="text-center">
