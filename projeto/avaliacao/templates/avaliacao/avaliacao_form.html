@@ -467,22 +467,22 @@
                 <td>NOTA</td>
                 
                 <td class="text-center">
-                  {% comment %} <div class="hidden">
+                  <div class="hidden">
                     {{ form.nota_final_responsavel }}
-                  </div> {% endcomment %}
+                  </div>
                   <input class="form-control" style="text-align:center" id="id_media_final_responsavel" readonly>
                 </td>
                 <td class="text-center">
-                  {% comment %} <div class="hidden">
+                  <div class="hidden">
                     {{ form.nota_final_suplente }}
-                  </div> {% endcomment %}
+                  </div>
                   <input class="form-control" style="text-align:center" id="id_media_final_suplente" readonly>
                 </td>
                 {% if object.avaliador_convidado %}
                   <td class="text-center">
-                    {% comment %} <div class="hidden">
+                    <div class="hidden">
                       {{ form.nota_final_convidado }}
-                    </div> {% endcomment %}
+                    </div>
                     <input class="form-control" style="text-align:center" id="id_media_final_convidado" readonly>
                   </td>
                 {% endif %}

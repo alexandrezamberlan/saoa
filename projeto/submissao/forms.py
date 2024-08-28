@@ -12,7 +12,7 @@ class SubmissaoForm(forms.ModelForm):
 
     class Meta:
         model = Submissao
-        fields = ['responsavel', 'evento', 'titulo', 'resumo', 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 'arquivo_comite_etica', 'status','observacoes', 'is_active']
+        fields = ['status','responsavel', 'evento', 'titulo', 'resumo', 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 'arquivo_comite_etica', 'observacoes', 'is_active']
 
 
 class BuscaSubmissaoForm(forms.Form):     

@@ -99,9 +99,6 @@ class Avaliacao(models.Model):
         return '%s' % (self.submissao)
     
     def calcular_media_final_avaliacao(self):
-        
-        
-        
         if self.avaliador_convidado:
             self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
         else:

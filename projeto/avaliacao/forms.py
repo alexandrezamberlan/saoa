@@ -30,7 +30,7 @@ class AvaliacaoForm(forms.ModelForm):
                     'merito_resultados_convidado','merito_conclusao_convidado',
                     'intercorrencias',
                     
-                    # 'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
+                    'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
                     # 'media_final_avaliacao', 
                     'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
     
