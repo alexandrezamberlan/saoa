@@ -79,6 +79,10 @@ class SubmissaoDeleteView(LoginRequiredMixin, DeleteView):
     model = Submissao
     success_url = 'submissao_list'
     
+    def get_success_url(self):
+        messages.success(self.request, 'Submissão removida com sucesso na plataforma!')
+        return reverse(self.success_url) 
+    
     def delete(self, request, *args, **kwargs):
         """
         Call the delete() method on the fetched object and then redirect to the
