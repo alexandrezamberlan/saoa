@@ -108,8 +108,8 @@
 						</td>
 						<td class="text-center">
 							
-								<span data-toggle="tooltip"  title='Gerar avaliação'>
-									<a href="{{ submissao.get_avaliacao_create_update_url }}" class="btn btn-sm {% if submissao.get_avaliacao %}btn-success{% else %}btn-warning{% endif %}"> {% bootstrap_icon 'check' %}</a>
+								<span data-toggle="tooltip"  title='Gerenciar avaliação'>
+									<a href="{{ submissao.get_avaliacao_create_update_url }}" class="btn btn-sm {% if submissao.get_avaliacao %}btn-info{% else %}btn-success{% endif %}"> {% bootstrap_icon 'check' %}</a>
 								</span>
 							
 							{% comment %} {% bootstrap_button content='' href=submissao.get_absolute_url button_type='link' icon='record' button_class='btn btn-info' size='sm' %} {% endcomment %}
