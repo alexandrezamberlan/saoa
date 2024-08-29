@@ -11,6 +11,7 @@ urlpatterns = [
 	path('<slug:slug>/', UsuarioUpdateView.as_view(), name='usuario_update'),
 	path('<slug:slug>/delete/', UsuarioDeleteView.as_view(), name='usuario_delete'),
  
+ 
  	path('register/success/',UsuarioRegisterSuccessView.as_view(),name='usuario_register_success'),
 	path('register/success_falha_email/',UsuarioRegisterSuccessFalhaEmailView.as_view(),name='usuario_register_success_falha_email'),
 	path('register/<slug:slug>/activate/', UsuarioRegisterActivateView.as_view(), name='usuario_register_activate'),

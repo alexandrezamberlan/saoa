@@ -84,22 +84,21 @@ class UsuarioUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView
 class UsuarioDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Usuario
     success_url = 'usuario_list'
+    
+    # def get_success_url(self):
+    #     messages.success(self.request, 'Atleta ou treinador removido com sucesso da plataforma!')
+    #     return reverse(self.success_url)
 
-    def get_success_url(self):
-        messages.success(self.request, 'Usuário removido com sucesso na plataforma!')
-        return reverse(self.success_url) 
 
     def delete(self, request, *args, **kwargs):
         """
         Call the delete() method on the fetched object and then redirect to the
         success URL. If the object is protected, send an error message.
-        """
-        self.object = self.get_object()
-        success_url = self.get_success_url()
+        """        
         try:
-            self.object.delete()
+            self.get_object().delete()
         except Exception as e:
-            messages.error(request, 'Há dependências ligadas à esse usuário, permissão negada!')
+            messages.error(request, f'Há dependências ligadas a esse Usuário, permissão negada! Erro: {e}')
         return redirect(self.success_url)
 
 
