@@ -82,6 +82,14 @@ class Submissao(models.Model):
         return reverse('appmembro_submissao_delete', kwargs={'slug': self.slug})
     
     @property
+    def get_coordenador_absolute_url(self):
+        return reverse('submissao_coordenador_update', kwargs={'slug': self.slug})
+    
+    @property
+    def get_delete_coordenador_url(self):
+        return reverse('submissao_coordenador_delete', kwargs={'slug': self.slug})
+    
+    @property
     def get_avaliacao(self):
         try:
             return Avaliacao.objects.get(submissao=self)

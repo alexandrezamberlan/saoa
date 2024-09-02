@@ -15,6 +15,15 @@ class SubmissaoForm(forms.ModelForm):
         fields = ['status','responsavel', 'evento', 'titulo', 'resumo', 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 'arquivo_comite_etica', 'observacoes', 'is_active']
 
 
+class SubmissaoCoordenadorForm(forms.ModelForm):
+    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos_data_aberta.all(), required=True)   
+ 
+    class Meta:
+        model = Submissao
+        fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 
+                  'arquivo_comite_etica', 'observacoes']
+
+
 class BuscaSubmissaoForm(forms.Form):     
     STATUS = (
         (None, '-----------'),
