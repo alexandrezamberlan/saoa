@@ -164,39 +164,5 @@ class MinhaAvaliacaoConvidadoForm(forms.ModelForm):
               'arquivo_corrigido_convidado', 'nota_final_convidado']
         
 
-# class MinhaSugestaoPreProjetoForm(forms.ModelForm):
-#     class Meta:
-#         model = Submissao
-#         fields = ['sugestoes_preprojeto']
-
-
-# class BuscaPreProjetoForm(forms.Form):
-#     nome_aluno = forms.CharField(label='Nome do aluno', required=False)
-#     curso = forms.ModelChoiceField(label='Curso', queryset=Curso.objects.all(), required=False)
-#     nome_orientador = forms.CharField(label='Nome do orientador', required=False)
-    
-
-# class BuscaMinhasAvaliacoesForm(forms.Form):
-#     STATUS_SUBMISSAO = (
-        
-#         ('EM ANDAMENTO', 'Em andamento'),
-#         ('ABANDONO OU TRANCADO', 'Abandono ou Trancado'),
-#         ('FINALIZADO', 'Finalizado'),
-#         ('REPROVADO', 'Reprovado'),
-#     ) 
-#     nome_aluno = forms.CharField(label='Nome do aluno', required=False)
-#     curso = forms.ModelChoiceField(label='Curso', queryset=Curso.objects.all(), required=False)
-#     status = forms.ChoiceField(label='Status', choices=STATUS_SUBMISSAO, required=False)
-    
-    
-# class BuscaMeusOrientandosForm(forms.Form):
-#     STATUS_SUBMISSAO = (
-
-#         ('EM ANDAMENTO', 'Em andamento'),
-#         ('ABANDONO OU TRANCADO', 'Abandono ou Trancado'),
-#         ('FINALIZADO', 'Finalizado'),
-#         ('REPROVADO', 'Reprovado'),
-#     ) 
-#     nome_aluno = forms.CharField(label='Nome do aluno', required=False)
-#     curso = forms.ModelChoiceField(label='Curso', queryset=Curso.objects.all(), required=False)
-#     status = forms.ChoiceField(label='Status', choices=STATUS_SUBMISSAO,required=False)
+class BuscaMinhasAvaliacoesForm(forms.Form):
+    evento = forms.ModelChoiceField(label='Evento', queryset=Evento.objects.all(), required=False)

@@ -5,8 +5,8 @@ from core.views import HomeRedirectView
 
 from .views import (DadosMembroUpdateView, EventoListView, #InscricaoListView, InscricaoCreateView, InscricaoDeleteView,
                     HomeView, AboutView,
-                    SubmissaoListView, SubmissaoCreateView, SubmissaoUpdateView, SubmissaoPendenteUpdateView, SubmissaoAprovadoUpdateView, 
-                    SubmissaoDeleteView)
+                    SubmissaoListView, SubmissaoCreateView, SubmissaoUpdateView, MinhaAvaliacaoListView, SubmissaoDeleteView,
+                    MinhaAvaliacaoResponsavelUpdateView, MinhaAvaliacaoSuplenteUpdateView, MinhaAvaliacaoConvidadoUpdateView)
 
 urlpatterns = [
    path('home', HomeView.as_view(), name='appmembro_home'), 
@@ -23,7 +23,11 @@ urlpatterns = [
    path('minhas-submissoes/<slug:slug>/', SubmissaoUpdateView.as_view(), name='appmembro_submissao_update'),
    path('minhas-submissoes/<slug:slug>/delete/', SubmissaoDeleteView.as_view(), name='appmembro_submissao_delete'),
 
+   path('minhas-avaliacoes', MinhaAvaliacaoListView.as_view(), name='appmembro_minha_avaliacao_list'),
 
+   path('minhas-avaliacoes/avaliacao/<slug:slug>/responsavel/', MinhaAvaliacaoResponsavelUpdateView.as_view(), name='appmembro_minha_avaliacao_responsavel'),
+   path('minhas-avaliacoes/avaliacao/<slug:slug>/suplente/', MinhaAvaliacaoSuplenteUpdateView.as_view(), name='appmembro_minha_avaliacao_suplente'),
+   path('minhas-avaliacoes-convidado/<slug:slug>/convidado/', MinhaAvaliacaoConvidadoUpdateView.as_view(), name='appmembro_minha_avaliacao_convidado'),
    
    # path('minhas-inscricoes', InscricaoListView.as_view(), name='appmembro_inscricao_list'),
    # path('minhas-inscricoes/cad/', InscricaoCreateView.as_view(), name='appmembro_inscricao_create'),

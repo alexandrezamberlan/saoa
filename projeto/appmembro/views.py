@@ -1,27 +1,27 @@
 from __future__ import unicode_literals
 
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
-from django.forms.models import BaseModelForm
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
 
-from mail_templated import EmailMessage
-
 from utils.decorators import LoginRequiredMixin, MembroRequiredMixin
 
+from avaliacao.models import Avaliacao
 from aviso.models import Aviso
 from evento.models import Evento
 from submissao.models import Submissao
 from usuario.models import Usuario
 
-from .forms import MembroCreateForm, BuscaSubmissaoForm, SubmissaoForm
+from .forms import MinhaAvaliacaoResponsavelForm, MinhaAvaliacaoSuplenteForm, MinhaAvaliacaoConvidadoForm
+from .forms import MembroCreateForm, BuscaSubmissaoForm, SubmissaoForm, BuscaMinhasAvaliacoesForm
 from evento.forms import BuscaEventoForm
 # from inscricao.forms import BuscaInscricaoForm
 
@@ -244,6 +244,127 @@ class SubmissaoDeleteView(LoginRequiredMixin, MembroRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+
+class MinhaAvaliacaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
+    model = Avaliacao
+    template_name = 'appmembro/minha_avaliacao_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            #quando ja tem dado filtrando
+            context['form'] = BuscaMinhasAvaliacoesForm(data=self.request.GET)
+        else:
+            #quando acessa sem dado filtrando
+            context['form'] = BuscaMinhasAvaliacoesForm()
+        return context
+        
+    def get_queryset(self):
+        qs = super(MinhaAvaliacaoListView, self).get_queryset()
+        qs = qs.filter(Q(avaliador_responsavel = self.request.user) | Q(avaliador_suplente = self.request.user) | Q(avaliador_convidado = self.request.user))
+        
+        if self.request.GET:
+            #quando ja tem dado filtrando
+            form = BuscaMinhasAvaliacoesForm(data=self.request.GET)
+        else:
+            #quando acessa sem dado filtrando
+            # qs = qs.filter(submissao__status = 'EM ANDAMENTO')
+            form = BuscaMinhasAvaliacoesForm()
+
+        if form.is_valid():
+            evento = form.cleaned_data.get('evento')
+            
+            if evento:
+                qs = qs.filter(submissao__evento=evento)
+
+        return qs
+    
+class MinhaAvaliacaoResponsavelUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoResponsavelForm
+    template_name = 'appprofessor/minha_avaliacao_responsavel_form.html'
+    success_url = 'appprofessor_minha_avaliacao_list'
+    
+    def get_object(self, queryset=None):
+        #Não deixa entrar no formulário de avaliação se ele não foi designado como 
+        #avaliador responsável
+        slug = self.kwargs.get('slug')
+        try:
+            obj = Avaliacao.objects.get(slug=slug, avaliador_responsavel=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador para esta submissão")
+    
+        return obj
+
+
+    def form_valid(self, form):
+        #Grava a data avaliação do responsável
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_responsavel = timezone.now()
+        avaliacao.parecer_liberado = 'SIM'
+        avaliacao.save()
+        return super(MinhaAvaliacaoResponsavelUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador 1 foi enviado com sucesso!')
+        return reverse(self.success_url)
+
+
+class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoSuplenteForm
+    template_name = 'appprofessor/minha_avaliacao_suplente_form.html'
+    success_url = 'appprofessor_minha_avaliacao_list'
+
+    def get_object(self, queryset=None):
+        #Não deixa entrar no formulário de avaliação se ele não foi designado como 
+        #avaliador suplente
+        slug = self.kwargs.get('slug')
+        try:
+            obj = Avaliacao.objects.get(slug=slug, avaliador_suplente=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador suplente para esta submissão")
+        return obj
+
+    def form_valid(self, form):
+        #Grava a data avaliação do suplente
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_suplente = timezone.now()
+        avaliacao.parecer_liberado = 'SIM'
+        avaliacao.save()
+        return super(MinhaAvaliacaoSuplenteUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador 2 foi enviado com sucesso!')
+        return reverse(self.success_url)
+    
+    
+class MinhaAvaliacaoConvidadoUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoConvidadoForm
+    template_name = 'appprofessor/minha_avaliacao_convidado_form.html'
+    success_url = 'appprofessor_minha_avaliacao_list'
+
+    def get_object(self, queryset=None):
+        #Não deixa entrar no formulário de avaliação se ele não foi designado como 
+        #avaliador Convidado
+        slug = self.kwargs.get('slug')
+        try:
+            obj = Avaliacao.objects.get(slug=slug, avaliador_convidado=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador Convidado para esta submissão")
+        return obj
+
+    def form_valid(self, form):
+        #Grava a data avaliação do Convidado
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_convidado = timezone.now()
+        avaliacao.save()
+        return super(MinhaAvaliacaoConvidadoUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador convidado foi enviado com sucesso!')
+        return reverse(self.success_url)
 
 # class InscricaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
 #     model = Inscricao

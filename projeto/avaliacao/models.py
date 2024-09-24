@@ -121,10 +121,6 @@ class Avaliacao(models.Model):
     @property
     def get_delete_url(self):
         return reverse('avaliacao_delete', kwargs={'slug': self.slug})
-
-    @property
-    def get_avaliacao_coordenador_orientador_url(self):
-        return reverse('minha_avaliacao_orientador', kwargs={'slug': self.slug})
   
     @property
     def get_avaliacao_coordenador_responsavel_url(self):
@@ -134,11 +130,7 @@ class Avaliacao(models.Model):
     def get_avaliacao_coordenador_suplente_url(self):
         return reverse('minha_avaliacao_suplente', kwargs={'slug': self.slug})
 
-    # para appmembro
-    @property
-    def get_avaliacao_orientador_url(self):
-        return reverse('appmembro_minha_avaliacao_orientador', kwargs={'slug': self.slug})
-  
+    # para appmembro  
     @property
     def get_avaliacao_responsavel_url(self):
         return reverse('appmembro_minha_avaliacao_responsavel', kwargs={'slug': self.slug})

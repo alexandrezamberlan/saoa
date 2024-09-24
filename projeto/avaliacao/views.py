@@ -1,18 +1,18 @@
 from __future__ import unicode_literals
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django import forms
 from django.contrib import messages
 from django.db.models import Q
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView
-from django.views.generic.base import View
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # from easy_pdf.views import PDFTemplateResponseMixin
@@ -23,8 +23,7 @@ from .models import Avaliacao
 
 from .forms import AvaliacaoForm, BuscaAvaliacaoForm
 
-from appmembro.forms import MinhaAvaliacaoResponsavelForm
-from appmembro.forms import MinhaAvaliacaoSuplenteForm
+from appmembro.forms import MinhaAvaliacaoResponsavelForm, MinhaAvaliacaoSuplenteForm, MinhaAvaliacaoConvidadoForm
 
 from submissao.models import Submissao
 
@@ -320,6 +319,34 @@ class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, CoordenadorRequiredMi
         messages.success(self.request, 'Seu parecer como avaliador 2 foi enviado com sucesso!')
         return reverse(self.success_url)
 
+class MinhaAvaliacaoConvidadoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoConvidadoForm
+    template_name = 'avaliacao/minha_avaliacao_convidado_form.html'
+    success_url = 'avaliacao_minhas_andamento_list'
+
+    def get_object(self, queryset=None):
+        #Não deixa entrar no formulário de avaliação se ele não foi designado como 
+        #avaliador suplente
+        pk = self.kwargs.get('pk')
+        try:
+            obj = Avaliacao.objects.get(pk=pk, avaliador_suplente=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador convidado para esta submissão")
+        return obj
+
+    def form_valid(self, form):
+        #Grava a data avaliação do suplente
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_suplente = timezone.now()
+        avaliacao.parecer_liberado = 'SIM'
+        avaliacao.save()
+        return super(MinhaAvaliacaoSuplenteUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador convidado foi enviado com sucesso!')
+        return reverse(self.success_url)
+
 
 class AvaliacaoDeleteView(LoginRequiredMixin, CoordenadorRequiredMixin, DeleteView):
     model = Avaliacao
@@ -350,11 +377,4 @@ class AvaliacaoDetailView(LoginRequiredMixin, DetailView):
 #     template_name = 'avaliacao/impressoes/avaliacao_pdf.html'
     
     
-# class AvaliacaoTermoBancaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
-#     model = Avaliacao
-#     template_name = 'avaliacao/impressoes/avaliacao_termobanca_pdf.html'
-    
-# class AvaliacaoTermoBibliotecaPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
-#     model = Avaliacao
-#     template_name = 'avaliacao/impressoes/avaliacao_termobiblioteca_pdf.html'
     
