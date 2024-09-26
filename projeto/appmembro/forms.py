@@ -75,8 +75,8 @@ class BuscaSubmissaoForm(forms.Form):
     
     
 class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
-    parecer_avaliador_responsavel = forms.CharField(label='Parecer do avaliador 1 (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_responsavel = forms.CharField(label='Parecer de rebanca do avaliador 1 (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_responsavel = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_responsavel = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_responsavel = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_responsavel = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -92,7 +92,7 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
     # merito_apresentacao_responsavel = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
     
     nota_final_responsavel = forms.DecimalField(label='Final responsavel',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
-    arquivo_corrigido_responsavel = forms.FileField(label='Arquivo do TCC corrigido pelo avaliador 1',  help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
+    arquivo_corrigido_responsavel = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador',  help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
     class Meta:
@@ -105,8 +105,8 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
         
         
 class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
-    parecer_avaliador_suplente = forms.CharField(label='Parecer do avaliador 2 (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_suplente = forms.CharField(label='Parecer de rebanca do avaliador 2 (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_suplente = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_suplente = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_suplente = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_suplente = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -122,7 +122,7 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
     # merito_apresentacao_suplente = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
     
     nota_final_suplente = forms.DecimalField(label='Final suplente',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
-    arquivo_corrigido_suplente = forms.FileField(label='Arquivo do TCC corrigido pelo avaliador 2', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
+    arquivo_corrigido_suplente = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
     class Meta:
@@ -135,8 +135,8 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
         
         
 class MinhaAvaliacaoConvidadoForm(forms.ModelForm):
-    parecer_avaliador_convidado = forms.CharField(label='Parecer do avaliador convidado (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_convidado = forms.CharField(label='Parecer de rebanca do avaliador convidado (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_convidado = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_convidado = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_convidado = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_convidado = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -152,7 +152,7 @@ class MinhaAvaliacaoConvidadoForm(forms.ModelForm):
     # merito_apresentacao_convidado = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
     
     nota_final_convidado = forms.DecimalField(label='Final convidado',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
-    arquivo_corrigido_convidado = forms.FileField(label='Arquivo do TCC corrigido pelo avaliador convidado', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
+    arquivo_corrigido_convidado = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
     class Meta:
