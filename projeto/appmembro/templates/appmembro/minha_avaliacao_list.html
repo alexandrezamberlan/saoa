@@ -28,6 +28,7 @@
 				<th>Trabalho</th>		
 				<th>Designação | Nota</th>				
 				<th>Data da avaliação</th>
+				<th>Status do trabalho</th>
 	  			<th class="text-center">Avaliar</th>
 				<th class="text-center">Meu Parecer</th>
 	  		</thead>
@@ -86,8 +87,11 @@
 								{% endif %}
 							{% endif %}
 						</td>
+						<td>
+							{{ avaliacao.submissao.get_status_display }}
+						</td>
 						<td class="text-center">
-							{{ avaliacao.submissao.status }}<br>
+							
 							<span data-toggle="tooltip"  title='Avalie ou edite a avaliação'>
 								{% if user == avaliacao.avaliador_responsavel and avaliacao.submissao.status == "EM AVALIACAO" %}
 									{% bootstrap_button content='' href=avaliacao.get_avaliacao_responsavel_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %}

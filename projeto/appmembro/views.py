@@ -282,8 +282,8 @@ class MinhaAvaliacaoListView(LoginRequiredMixin, MembroRequiredMixin, ListView):
 class MinhaAvaliacaoResponsavelUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
     model = Avaliacao
     form_class = MinhaAvaliacaoResponsavelForm
-    template_name = 'appprofessor/minha_avaliacao_responsavel_form.html'
-    success_url = 'appprofessor_minha_avaliacao_list'
+    template_name = 'appmembro/minha_avaliacao_responsavel_form.html'
+    success_url = 'appmembro_minha_avaliacao_list'
     
     def get_object(self, queryset=None):
         #Não deixa entrar no formulário de avaliação se ele não foi designado como 
@@ -313,8 +313,8 @@ class MinhaAvaliacaoResponsavelUpdateView(LoginRequiredMixin, MembroRequiredMixi
 class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
     model = Avaliacao
     form_class = MinhaAvaliacaoSuplenteForm
-    template_name = 'appprofessor/minha_avaliacao_suplente_form.html'
-    success_url = 'appprofessor_minha_avaliacao_list'
+    template_name = 'appmembro/minha_avaliacao_suplente_form.html'
+    success_url = 'appmembro_minha_avaliacao_list'
 
     def get_object(self, queryset=None):
         #Não deixa entrar no formulário de avaliação se ele não foi designado como 
@@ -342,8 +342,8 @@ class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, MembroRequiredMixin, 
 class MinhaAvaliacaoConvidadoUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
     model = Avaliacao
     form_class = MinhaAvaliacaoConvidadoForm
-    template_name = 'appprofessor/minha_avaliacao_convidado_form.html'
-    success_url = 'appprofessor_minha_avaliacao_list'
+    template_name = 'appmembro/minha_avaliacao_convidado_form.html'
+    success_url = 'appmembro_minha_avaliacao_list'
 
     def get_object(self, queryset=None):
         #Não deixa entrar no formulário de avaliação se ele não foi designado como 
