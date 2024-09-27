@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 
-from datetime import timedelta, datetime, timezone
+from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.urls import reverse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView

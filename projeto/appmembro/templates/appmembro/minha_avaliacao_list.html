@@ -26,11 +26,9 @@
 		<table class="table table-hover">
 	  		<thead>
 				<th>Trabalho</th>		
-				<th>Designação | Nota</th>				
 				<th>Data da avaliação</th>
 				<th>Status do trabalho</th>
 	  			<th class="text-center">Avaliar</th>
-				<th class="text-center">Meu Parecer</th>
 	  		</thead>
 	  		<tbody>
 	  			{% for avaliacao in object_list %}
@@ -41,7 +39,7 @@
 								{{ avaliacao.submissao.titulo }} 
 							{% endif %}
 						</td>
-						<td>
+						{% comment %} <td>
 							{% if user == avaliacao.avaliador_responsavel %}
 								Avaliador 1 | {{ avaliacao.nota_final_responsavel }}
 							{% endif %}
@@ -49,9 +47,9 @@
 								Avaliador 2 | {{ avaliacao.nota_final_suplente }}
 							{% endif %}
 							{% if user == avaliacao.avaliador_convidado %}
-								Avaliador Convidado | {{ avaliacao.nota_final_convidado }}
+								Avaliador 3 | {{ avaliacao.nota_final_convidado }}
 							{% endif %}
-						</td>
+						</td> {% endcomment %}
 						<td>
 							{% if user == avaliacao.avaliador_responsavel %}
 								{% if avaliacao.parecer_avaliador_responsavel and avaliacao.nota_final_responsavel %}
@@ -105,8 +103,9 @@
 							</span>
 					    </td>
 
+						{% comment %}
 						<td class="text-center">
-							{% if user == avaliacao.avaliador_responsavel %}
+							 {% if user == avaliacao.avaliador_responsavel %}
 								{% if avaliacao.dt_avaliacao_responsavel %}
 									<span data-toggle="tooltip"  title='Baixe seu parecer'>
 										<a href="{{ avaliacao.get_meu_parecer_impressao_url }}" target="_blank" class="btn btn-md btn-success">{% bootstrap_icon 'print' %} </a>
@@ -138,8 +137,9 @@
                       					{% bootstrap_icon 'download' %}
                     				</a>
 								{% endif %}
-							{% endif %}
+							{% endif %} 
 						</td>
+						{% endcomment %}
 					</tr>
 				{% endfor %}
 	  		</tbody>

@@ -75,23 +75,27 @@ class BuscaSubmissaoForm(forms.Form):
     
     
 class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
+    NOTA = (
+        (None, '---------'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    )
     parecer_avaliador_responsavel = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     parecer_rebanca_avaliador_responsavel = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
-    merito_relevancia_responsavel = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_contribuicao_responsavel = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_metodologia_responsavel = forms.DecimalField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_fundamentacao_responsavel = forms.DecimalField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_clareza_responsavel = forms.DecimalField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_referencias_responsavel = forms.DecimalField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_resultados_responsavel = forms.DecimalField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_conclusao_responsavel = forms.DecimalField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_relevancia_responsavel = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_contribuicao_responsavel = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_metodologia_responsavel = forms.ChoiceField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_fundamentacao_responsavel = forms.ChoiceField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_clareza_responsavel = forms.ChoiceField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_referencias_responsavel = forms.ChoiceField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_resultados_responsavel = forms.ChoiceField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_conclusao_responsavel = forms.ChoiceField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    # merito_desenvolvimento_responsavel = forms.DecimalField(label='Desenvolvimento',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_redacao_responsavel = forms.DecimalField(label='Redação do texto',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_apresentacao_responsavel = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    
-    nota_final_responsavel = forms.DecimalField(label='Final responsavel',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
+    nota_final_responsavel = forms.CharField(label='Final responsavel',help_text='Máximo 10 pontos', required=False)    
     arquivo_corrigido_responsavel = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador',  help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
@@ -105,23 +109,26 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
         
         
 class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
+    NOTA = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    )
     parecer_avaliador_suplente = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     parecer_rebanca_avaliador_suplente = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
-    merito_relevancia_suplente = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_contribuicao_suplente = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_metodologia_suplente = forms.DecimalField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_fundamentacao_suplente = forms.DecimalField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_clareza_suplente = forms.DecimalField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_referencias_suplente = forms.DecimalField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_resultados_suplente = forms.DecimalField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_conclusao_suplente = forms.DecimalField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    
-    # merito_desenvolvimento_suplente = forms.DecimalField(label='Desenvolvimento',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_redacao_suplente = forms.DecimalField(label='Redação do texto',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_apresentacao_suplente = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    
-    nota_final_suplente = forms.DecimalField(label='Final suplente',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
+    merito_relevancia_suplente = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_contribuicao_suplente = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_metodologia_suplente = forms.ChoiceField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_fundamentacao_suplente = forms.ChoiceField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_clareza_suplente = forms.ChoiceField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_referencias_suplente = forms.ChoiceField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_resultados_suplente = forms.ChoiceField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_conclusao_suplente = forms.ChoiceField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+     
+    nota_final_suplente = forms.CharField(label='Final suplente',help_text='Máximo 10 pontos')    
     arquivo_corrigido_suplente = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
@@ -135,23 +142,26 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
         
         
 class MinhaAvaliacaoConvidadoForm(forms.ModelForm):
+    NOTA = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    )
     parecer_avaliador_convidado = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     parecer_rebanca_avaliador_convidado = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
-    merito_relevancia_convidado = forms.DecimalField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_contribuicao_convidado = forms.DecimalField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_metodologia_convidado = forms.DecimalField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_fundamentacao_convidado = forms.DecimalField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_clareza_convidado = forms.DecimalField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_referencias_convidado = forms.DecimalField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_resultados_convidado = forms.DecimalField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
-    merito_conclusao_convidado = forms.DecimalField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_digits=1, decimal_places=0, validators=[MinValueValidator(0), MaxValueValidator(5)], help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_relevancia_convidado = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_contribuicao_convidado = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_metodologia_convidado = forms.ChoiceField(label='Metodologia: O artigo apresenta uma metodologia e a utiliza de forma apropriada para o problema proposto?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_fundamentacao_convidado = forms.ChoiceField(label='Fundamentação teórica: O artigo baseia-se em teorias, fundamentos e conceitos relevantes na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_clareza_convidado = forms.ChoiceField(label='Clareza e organização: O artigo apresenta escrita clara, organizada e coerente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_referencias_convidado = forms.ChoiceField(label='Referências bibliográficas: As referências utilizadas no artigo são atualizadas e/ou relevantes? ', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_resultados_convidado = forms.ChoiceField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
+    merito_conclusao_convidado = forms.ChoiceField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    # merito_desenvolvimento_convidado = forms.DecimalField(label='Desenvolvimento',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_redacao_convidado = forms.DecimalField(label='Redação do texto',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    # merito_apresentacao_convidado = forms.DecimalField(label='Apresentação',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])
-    
-    nota_final_convidado = forms.DecimalField(label='Final convidado',help_text='Máximo 10 pontos', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(10.0)])    
+    nota_final_convidado = forms.CharField(label='Final convidado',help_text='Máximo 10 pontos')    
     arquivo_corrigido_convidado = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
