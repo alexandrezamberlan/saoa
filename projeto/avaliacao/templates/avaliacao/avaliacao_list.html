@@ -39,7 +39,9 @@
 				<th>{% bootstrap_icon 'option-vertical' %}</th>
 				<th>Avaliador_1</th>
 				<th>Avaliador_2</th>
+				
 				{% comment %} <th>Avaliador_3</th> {% endcomment %}
+
 				<th class="text-center">Parecer liberado?</th>
 	  			<th class="text-center">Gerenciar</th>
 	  			<th class="text-center">Excluir</th>
@@ -104,6 +106,7 @@
 								{% endif %}							
 							{% endif %}
 						</td>
+						
 						{% comment %} <td>	
 							{% if avaliacao.avaliador_convidado %}
 								<small>{{ avaliacao.avaliador_convidado.nome }}</small><br>
@@ -125,6 +128,7 @@
 								</span>
 							{% endif %}
 						</td> {% endcomment %}
+						
 						<td class="text-center">
 							{% if avaliacao.parecer_liberado == 'SIM' %}
 								<span data-toggle="tooltip"  title='Parecer liberado'>
