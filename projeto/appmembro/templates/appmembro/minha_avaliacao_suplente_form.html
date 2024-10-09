@@ -49,18 +49,18 @@
   </div>
 </div>
 
-<form class="form" role="form" method="POST" enctype="multipart/form-data" name="form_avaliacao_responsavel"> 
+<form class="form" role="form" method="POST" enctype="multipart/form-data" name="form_avaliacao_suplente"> 
   {% csrf_token %}
   {{ form.non_field_errors }} 
-  <!-- avaliador responsavel -->
+  <!-- avaliador suplente -->
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
-        Avaliador: {{ object.avaliador_responsavel.nome }} <br><br>
+        Avaliador: {{ object.avaliador_suplente.nome }} <br><br>
         Status do parecer: 
-        {% if object.dt_avaliacao_responsavel %}
+        {% if object.dt_avaliacao_suplente %}
           <span class="label label-success">
-            Parecer enviado em: {{ object.dt_avaliacao_responsavel|date:"d/m/Y H:i" }} 
+            Parecer enviado em: {{ object.dt_avaliacao_suplente|date:"d/m/Y H:i" }} 
           </span>
         {% else %}
           <span class="label label-warning">
@@ -80,73 +80,73 @@
         <tbody>
           <tr>
             <td>
-              {{ form.merito_relevancia_responsavel.label|upper }}
+              {{ form.merito_relevancia_suplente.label|upper }}
             </td>              
             <td>
-              {{ form.merito_relevancia_responsavel }}
-              <div class="text-danger">{{ form.merito_relevancia_responsavel.errors }}</div>
+              {{ form.merito_relevancia_suplente }}
+              <div class="text-danger">{{ form.merito_relevancia_suplente.errors }}</div>
             </td>
           </tr>
           <tr>
             <td>
-              {{ form.merito_contribuicao_responsavel.label|upper }}
+              {{ form.merito_contribuicao_suplente.label|upper }}
             </td>
             <td>
-              {{ form.merito_contribuicao_responsavel }}
-              <div class="text-danger">{{ form.merito_contribuicao_responsavel.errors }}</div>
+              {{ form.merito_contribuicao_suplente }}
+              <div class="text-danger">{{ form.merito_contribuicao_suplente.errors }}</div>
           </tr>
           <tr>
             <td>
-              {{ form.merito_metodologia_responsavel.label|upper }}
+              {{ form.merito_metodologia_suplente.label|upper }}
             </td>
             <td>
-              {{ form.merito_metodologia_responsavel }} 
-              <div class="text-danger">{{ form.merito_metodologia_responsavel.errors }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{ form.merito_fundamentacao_responsavel.label|upper }}
-            </td>
-            <td>
-              {{ form.merito_fundamentacao_responsavel }} 
-              <div class="text-danger">{{ form.merito_fundamentacao_responsavel.errors }}</div>
+              {{ form.merito_metodologia_suplente }} 
+              <div class="text-danger">{{ form.merito_metodologia_suplente.errors }}</div>
             </td>
           </tr>
           <tr>
             <td>
-              {{ form.merito_clareza_responsavel.label|upper }}
+              {{ form.merito_fundamentacao_suplente.label|upper }}
             </td>
             <td>
-              {{ form.merito_clareza_responsavel }} 
-              <div class="text-danger">{{ form.merito_clareza_responsavel.errors }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{ form.merito_referencias_responsavel.label|upper }}
-            </td>
-            <td>
-              {{ form.merito_referencias_responsavel }} 
-              <div class="text-danger">{{ form.merito_referencias_responsavel.errors }}</div>
+              {{ form.merito_fundamentacao_suplente }} 
+              <div class="text-danger">{{ form.merito_fundamentacao_suplente.errors }}</div>
             </td>
           </tr>
           <tr>
             <td>
-              {{ form.merito_resultados_responsavel.label|upper }}
+              {{ form.merito_clareza_suplente.label|upper }}
             </td>
             <td>
-              {{ form.merito_resultados_responsavel }} 
-              <div class="text-danger">{{ form.merito_resultados_responsavel.errors }}</div>
+              {{ form.merito_clareza_suplente }} 
+              <div class="text-danger">{{ form.merito_clareza_suplente.errors }}</div>
             </td>
           </tr>
           <tr>
             <td>
-              {{ form.merito_conclusao_responsavel.label|upper }}
+              {{ form.merito_referencias_suplente.label|upper }}
             </td>
             <td>
-              {{ form.merito_conclusao_responsavel }} 
-              <div class="text-danger">{{ form.merito_conclusao_responsavel.errors }}</div>
+              {{ form.merito_referencias_suplente }} 
+              <div class="text-danger">{{ form.merito_referencias_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_resultados_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_resultados_suplente }} 
+              <div class="text-danger">{{ form.merito_resultados_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_conclusao_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_conclusao_suplente }} 
+              <div class="text-danger">{{ form.merito_conclusao_suplente.errors }}</div>
             </td>
           </tr>
           {% comment %} <tr>
@@ -155,18 +155,18 @@
             </td>
             <td>  
               <b>
-                <input class="form-control" id="id_nota_final_responsavel" readonly>
+                <input class="form-control" id="id_nota_final_suplente" readonly>
               </b>
             </td>
           </tr> {% endcomment %}
         </tbody>
       </table>
-      {% bootstrap_field form.parecer_avaliador_responsavel %}
+      {% bootstrap_field form.parecer_avaliador_suplente %}
       {% if object.rebanca == 'SIM'%}
         <h3><span class="label label-warning">Rebanca</span></h3>
-        {% bootstrap_field form.parecer_reavaliacao_avaliador_responsavel %}
+        {% bootstrap_field form.parecer_reavaliacao_avaliador_suplente %}
       {% endif %}
-      {% bootstrap_field form.arquivo_corrigido_responsavel %}
+      {% bootstrap_field form.arquivo_corrigido_suplente %}
     </div>
   </div>   
   {% buttons submit='Gravar' %}

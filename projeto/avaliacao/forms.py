@@ -10,12 +10,12 @@ from .models import Avaliacao
 class AvaliacaoForm(forms.ModelForm):
     avaliador_responsavel = forms.ModelChoiceField(label='Selecione um membro como avaliador 1 *', queryset=Usuario.usuarios_ativos.all(), required=True)
     avaliador_suplente = forms.ModelChoiceField(label='Selecione um membro como avaliador 2 *', queryset=Usuario.usuarios_ativos.all(), required=True)
-    avaliador_convidado = forms.ModelChoiceField(label='Selecione um membro como avaliador 3', queryset=Usuario.usuarios_ativos.all(), required=False)
+    # avaliador_convidado = forms.ModelChoiceField(label='Selecione um membro como avaliador 3', queryset=Usuario.usuarios_ativos.all(), required=False)
 
     
     class Meta:
         model = Avaliacao
-        fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'avaliador_convidado', 'parecer_liberado', 
+        fields = ['submissao', 'avaliador_responsavel', 'avaliador_suplente', 'parecer_liberado', 
                     'parecer_avaliador_responsavel', 'parecer_avaliador_suplente', 'parecer_avaliador_convidado',
                     'parecer_reavaliacao_avaliador_responsavel', 'parecer_reavaliacao_avaliador_suplente', 'parecer_reavaliacao_avaliador_convidado',
                     
@@ -25,14 +25,18 @@ class AvaliacaoForm(forms.ModelForm):
                     'merito_relevancia_suplente','merito_contribuicao_suplente','merito_metodologia_suplente',
                     'merito_fundamentacao_suplente','merito_clareza_suplente','merito_referencias_suplente',
                     'merito_resultados_suplente','merito_conclusao_suplente',
-                    'merito_relevancia_convidado','merito_contribuicao_convidado','merito_metodologia_convidado',
-                    'merito_fundamentacao_convidado','merito_clareza_convidado','merito_referencias_convidado',
-                    'merito_resultados_convidado','merito_conclusao_convidado',
                     'intercorrencias',
                     
-                    'nota_final_responsavel', 'nota_final_suplente', 'nota_final_convidado', 
+                    
+                    
+                    'nota_final_responsavel', 'nota_final_suplente', 
                     # 'media_final_avaliacao', 
-                    'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente', 'arquivo_corrigido_convidado']
+                    'arquivo_corrigido_responsavel', 'arquivo_corrigido_suplente']
+        
+                    # avaliador_convidado, 'nota_final_convidado', 'merito_relevancia_convidado','merito_contribuicao_convidado','merito_metodologia_convidado',
+                    # 'merito_fundamentacao_convidado','merito_clareza_convidado','merito_referencias_convidado',
+                    # 'merito_resultados_convidado','merito_conclusao_convidado', 'arquivo_corrigido_convidado'
+                    
     
     def clean_avaliador_convidado(self):
         avaliador_responsavel = self.cleaned_data.get('avaliador_responsavel')

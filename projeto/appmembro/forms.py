@@ -95,7 +95,7 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
     merito_resultados_responsavel = forms.ChoiceField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_responsavel = forms.ChoiceField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    nota_final_responsavel = forms.CharField(label='Final responsavel',help_text='Máximo 10 pontos', required=False)    
+    #nota_final_responsavel = forms.CharField(label='Final responsavel',help_text='Máximo 10 pontos', required=False)    
     arquivo_corrigido_responsavel = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador',  help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
@@ -105,11 +105,13 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
               'merito_relevancia_responsavel', 'merito_contribuicao_responsavel', 'merito_metodologia_responsavel',
               'merito_fundamentacao_responsavel', 'merito_clareza_responsavel', 'merito_referencias_responsavel',
               'merito_resultados_responsavel', 'merito_conclusao_responsavel', 
-              'arquivo_corrigido_responsavel', 'nota_final_responsavel']
+              'arquivo_corrigido_responsavel']
+                #'nota_final_responsavel'
         
         
 class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
     NOTA = (
+         (None, '---------'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -128,7 +130,7 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
     merito_resultados_suplente = forms.ChoiceField(label='Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_suplente = forms.ChoiceField(label='Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
      
-    nota_final_suplente = forms.CharField(label='Final suplente',help_text='Máximo 10 pontos')    
+    # nota_final_suplente = forms.CharField(label='Final suplente',help_text='Máximo 10 pontos')    
     arquivo_corrigido_suplente = forms.FileField(label='Arquivo do artigo submetido com apontamentos do avaliador', help_text='Use formato .pdf para enviar seu arquivo corrigido', required=False)
     
     
@@ -138,7 +140,8 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
               'merito_relevancia_suplente', 'merito_contribuicao_suplente', 'merito_metodologia_suplente',
               'merito_fundamentacao_suplente', 'merito_clareza_suplente', 'merito_referencias_suplente',
               'merito_resultados_suplente', 'merito_conclusao_suplente', 
-              'arquivo_corrigido_suplente', 'nota_final_suplente']
+              'arquivo_corrigido_suplente']
+                # 'nota_final_suplente'
         
         
 class MinhaAvaliacaoConvidadoForm(forms.ModelForm):

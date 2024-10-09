@@ -70,12 +70,12 @@
     <span class='hidden'>
       {% bootstrap_field form.avaliador_responsavel %}
       {% bootstrap_field form.avaliador_suplente %}
-      {% bootstrap_field form.avaliador_convidado %}
+      {% comment %} {% bootstrap_field form.avaliador_convidado %} {% endcomment %}
     </span>
   {% else %}
     {% bootstrap_field form.avaliador_responsavel %}
     {% bootstrap_field form.avaliador_suplente %}
-    {% bootstrap_field form.avaliador_convidado %}
+    {% comment %} {% bootstrap_field form.avaliador_convidado %} {% endcomment %}
   {% endif %}
 
   {% if object %} 
@@ -317,7 +317,7 @@
       </div>
     </div>
 
-    <!-- avaliador convidado -->
+    {% comment %} <!-- avaliador convidado -->
     {% if object.avaliador_convidado %}
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -435,7 +435,7 @@
           {% bootstrap_field form.arquivo_corrigido_convidado %}
         </div>
       </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <!-- seção dos coordenadores -->
     <h3>Coordenação Evento</h3>

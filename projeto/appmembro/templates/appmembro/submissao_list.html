@@ -117,7 +117,7 @@
 								{% endif %}
 							</span>
 						</td>
-						{% if submissao.status == 'EM EDICAO' %}
+						{% if submissao.status == 'EM EDICAO' or submissao.status == 'APROVADO' %}
 							<td class="text-center">
 								{% bootstrap_button content='' href=submissao.get_appmembro_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
 							</td>
@@ -135,7 +135,6 @@
 									{% bootstrap_icon 'trash' %}
 								</a>
 							</td>
-
 						{% endif %}
 					</tr>
 				{% endfor %}
