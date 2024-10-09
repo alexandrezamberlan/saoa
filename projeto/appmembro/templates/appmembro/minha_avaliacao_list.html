@@ -93,9 +93,11 @@
 								{% if user == avaliacao.avaliador_responsavel and avaliacao.submissao.status == "EM AVALIACAO" %}
 									{% bootstrap_button content='' href=avaliacao.get_avaliacao_responsavel_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %}
 								{% endif %}
+								
 								{% if user == avaliacao.avaliador_suplente and avaliacao.submissao.status == "EM AVALIACAO" %}
 									{% bootstrap_button content='' href=avaliacao.get_avaliacao_suplente_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %} 
-								{% endif %}
+								{% endif %} 
+
 								{% if user == avaliacao.avaliador_convidado and avaliacao.submissao.status == "EM AVALIACAO" %}
 									{% comment %} {% bootstrap_button content='' href=avaliacao.get_avaliacao_convidado_url button_type='link' icon='check' button_class='btn btn-primary' size='sm' %} {% endcomment %}
 								{% endif %}
