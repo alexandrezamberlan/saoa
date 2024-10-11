@@ -75,7 +75,7 @@
 						<td>
 							{% if avaliacao.avaliador_responsavel %}
 								<small>{{ avaliacao.avaliador_responsavel.nome }}</small><br>
-								{% if avaliacao.nota_final_responsavel %}
+								{% if avaliacao.parecer_avaliador_responsavel %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_responsavel|date:'d/m/Y' }}
 									</span><br>
@@ -92,7 +92,7 @@
 						<td>
 							{% if avaliacao.avaliador_suplente %}
 								<small>{{ avaliacao.avaliador_suplente.nome }}</small><br>
-								{% if avaliacao.nota_final_suplente %}
+								{% if avaliacao.parecer_avaliador_suplente %}
 									<span class="label label-success">
 										{{ avaliacao.dt_avaliacao_suplente|date:'d/m/Y' }}
 									</span><br>
@@ -128,7 +128,6 @@
 								</span>
 							{% endif %}
 						</td> {% endcomment %}
-						
 						<td class="text-center">
 							{% if avaliacao.parecer_liberado == 'SIM' %}
 								<span data-toggle="tooltip"  title='Parecer liberado'>

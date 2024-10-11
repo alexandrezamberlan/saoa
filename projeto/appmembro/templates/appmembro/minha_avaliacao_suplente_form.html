@@ -1,4 +1,5 @@
 {% extends 'appmembro/base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 
 {% block actions %}
@@ -6,6 +7,10 @@
 
 {% block title %}
 	{% bootstrap_icon 'check' %} Minha avaliação
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'avaliacao/js/avaliacao.js' %}"></script>
 {% endblock %}
 
 {% block content %}

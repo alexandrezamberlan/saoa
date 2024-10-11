@@ -107,6 +107,9 @@ class Avaliacao(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = gerar_hash()
+            
+        print(self.parecer_avaliador_responsavel, self.nota_final_responsavel)
+        print(self.parecer_avaliador_suplente, self.nota_final_suplente)
         #criando uma avaliacao, entao, atualiza o status da submissao para EM AVALIACAO
         if not self.id:
             self.submissao.status = 'EM AVALIACAO'

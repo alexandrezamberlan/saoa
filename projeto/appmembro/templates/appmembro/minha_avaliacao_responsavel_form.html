@@ -1,4 +1,5 @@
 {% extends 'appmembro/base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 
 {% block actions %}
@@ -6,6 +7,10 @@
 
 {% block title %}
 	{% bootstrap_icon 'check' %} Minha avaliação
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'avaliacao/js/avaliacao.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -149,7 +154,7 @@
               <div class="text-danger">{{ form.merito_conclusao_responsavel.errors }}</div>
             </td>
           </tr>
-          {% comment %} <tr>
+          <tr>
             <td>
               <b>MÉDIA FINAL</b>
             </td>
@@ -158,7 +163,7 @@
                 <input class="form-control" id="id_nota_final_responsavel" readonly>
               </b>
             </td>
-          </tr> {% endcomment %}
+          </tr>
         </tbody>
       </table>
       {% bootstrap_field form.parecer_avaliador_responsavel %}
