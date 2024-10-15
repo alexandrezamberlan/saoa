@@ -33,7 +33,8 @@ class BuscaSubmissaoForm(forms.Form):
         ('APROVADO', 'Aprovado' ),
         ('RETIRADO PELO RESPONSAVEL', 'Retirado pelo responsável'),
         ('RETIRADO PELO COORDENADOR', 'Retirado pelo coordenador' ),
-        ('REPROVADO', 'Reprovado' ),  
+        ('REPROVADO', 'Reprovado' ),
+        ('FINALIZADO', 'Finalizado')
     )         
     
     situacao = forms.ChoiceField(label='Status da submissão', choices=STATUS, required=False)

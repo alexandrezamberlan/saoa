@@ -27,6 +27,9 @@ from appmembro.forms import MinhaAvaliacaoResponsavelForm, MinhaAvaliacaoSuplent
 
 from submissao.models import Submissao
 
+from appmembro.forms import BuscaMinhasAvaliacoesForm
+
+
 class AvaliacaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
     model = Avaliacao
     template_name = 'avaliacao/avaliacao_list.html'
@@ -196,7 +199,38 @@ class AvaliacaoImpressaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, L
     
 class MinhaAvaliacaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
     model = Avaliacao
-    template_name = 'avaliacao/minha_avaliacao_list.html' 
+    template_name = 'avaliacao/minha_avaliacao_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            # quando ja tem dado filtrando
+            context['form'] = BuscaMinhasAvaliacoesForm(data=self.request.GET)
+        else:
+            # quando acessa sem dado filtrando
+            context['form'] = BuscaMinhasAvaliacoesForm()
+        return context
+
+    def get_queryset(self):
+        qs = super(MinhaAvaliacaoListView, self).get_queryset()
+        qs = qs.filter(Q(avaliador_responsavel=self.request.user) | Q(avaliador_suplente=self.request.user) | Q(
+            avaliador_convidado=self.request.user))
+
+        if self.request.GET:
+            # quando ja tem dado filtrando
+            form = BuscaMinhasAvaliacoesForm(data=self.request.GET)
+        else:
+            # quando acessa sem dado filtrando
+            # qs = qs.filter(submissao__status = 'EM ANDAMENTO')
+            form = BuscaMinhasAvaliacoesForm()
+
+        if form.is_valid():
+            evento = form.cleaned_data.get('evento')
+
+            if evento:
+                qs = qs.filter(submissao__evento=evento)
+
+        return qs
 
 
 class AvaliacaoMinhaCoordenacaoListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
@@ -375,6 +409,62 @@ class AvaliacaoDetailView(LoginRequiredMixin, DetailView):
 # class AvaliacaoPdfView(LoginRequiredMixin, PDFTemplateResponseMixin, DetailView):
 #     model = Avaliacao
 #     template_name = 'avaliacao/impressoes/avaliacao_pdf.html'
-    
-    
-    
+
+
+class MinhaAvaliacaoResponsavelUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoResponsavelForm
+    template_name = 'avaliacao/minha_avaliacao_responsavel_form.html'
+    success_url = 'minha_avaliacao_list'
+
+    def get_object(self, queryset=None):
+        # Não deixa entrar no formulário de avaliação se ele não foi designado como
+        # avaliador responsável
+        slug = self.kwargs.get('slug')
+        try:
+            obj = Avaliacao.objects.get(slug=slug, avaliador_responsavel=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador para esta submissão")
+
+        return obj
+
+    def form_valid(self, form):
+        # Grava a data avaliação do responsável
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_responsavel = timezone.now()
+        avaliacao.parecer_liberado = 'SIM'
+        avaliacao.save()
+        return super(MinhaAvaliacaoResponsavelUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador 1 foi enviado com sucesso!')
+        return reverse(self.success_url)
+
+
+class MinhaAvaliacaoSuplenteUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
+    model = Avaliacao
+    form_class = MinhaAvaliacaoSuplenteForm
+    template_name = 'avaliacao/minha_avaliacao_suplente_form.html'
+    success_url = 'minha_avaliacao_list'
+
+    def get_object(self, queryset=None):
+        # Não deixa entrar no formulário de avaliação se ele não foi designado como
+        # avaliador suplente
+        slug = self.kwargs.get('slug')
+        try:
+            obj = Avaliacao.objects.get(slug=slug, avaliador_suplente=self.request.user)
+        except:
+            raise Http404("Você não foi designado como avaliador suplente para esta submissão")
+        return obj
+
+    def form_valid(self, form):
+        # Grava a data avaliação do suplente
+        avaliacao = form.save()
+        avaliacao.dt_avaliacao_suplente = timezone.now()
+        avaliacao.parecer_liberado = 'SIM'
+        avaliacao.save()
+        return super(MinhaAvaliacaoSuplenteUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Seu parecer como avaliador 2 foi enviado com sucesso!')
+        return reverse(self.success_url)

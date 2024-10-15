@@ -1,186 +1,179 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 
 {% block actions %}
 {% endblock %}
 
 {% block title %}
-	{% bootstrap_icon 'check' %} Minha avaliação TCC
+	{% bootstrap_icon 'check' %} Minha avaliação
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'avaliacao/js/avaliacao.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="panel panel-default">
   <div class="panel-body">
     <h4>
-        <small>Submissão a ser avaliada:</small><br><br>
-        {{ object.submissao }} <br><br>
-        
-        <table class="table table-condensed table-responsive">
-          <tr class="text-center">
-            <td>
-              <small>TEXTO PARA BANCA</small><br><br>
-              {% if  object.submissao.arquivo_texto_tfgbanca %}
-                <a href="{{ object.submissao.arquivo_texto_tfgbanca.url }}" target="_blank" class="btn btn-sm btn-success">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% else %}
-                <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% endif %}
-            </td>
-            <td>
-              <small>ORIENTAÇÕES PARA O PROTÓTIPO</small><br><br>
-              {% if  object.submissao.arquivo_produto_tfgfinal %}
-                <a href="{{ object.submissao.arquivo_produto_tfgfinal.url }}" target="_blank" class="btn btn-sm btn-success">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% else %}
-                <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% endif %}
-            </td>
-            <td>
-              <small>TEXTO PARA REBANCA </small><br><br>
-              {% if  object.submissao.arquivo_texto_tfgrebanca  %}
-                <a href="{{ object.submissao.arquivo_texto_tfgrebanca.url }}" target="_blank" class="btn btn-sm btn-success">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% else %}
-                <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% endif %}
-            </td>
-            <td>
-              <small>TEXTO FINAL PARA BIBLIOTECA</small><br><br>
-              {% if  object.submissao.arquivo_texto_tfgfinal  %}
-                <a href="{{ object.submissao.arquivo_texto_tfgfinal.url }}" target="_blank" class="btn btn-sm btn-success">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% else %}
-                <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
-                  {% bootstrap_icon 'download' %}
-                </a>
-              {% endif %}
-            </td>
-          </tr>
-        </table>
+        <small><b>Submissão a ser avaliada:</b></small> {{ object.submissao.id }} | {{ object.submissao.titulo }}<br><br>
     </h4> 
+    <table class="table table-condensed table-responsive">
+      <tr>
+        <td>
+          <b>Artigo</b><br><br>
+          {% if  object.submissao.arquivo_sem_autores %}
+            <a href="{{ object.submissao.arquivo_sem_autores.url }}" target="_blank" class="btn btn-sm btn-success">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% else %}
+            <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          <b>Comitê de Ética</b><br><br>
+          {% if  object.submissao.arquivo_comite_etica %}
+            <a href="{{ object.submissao.arquivo_comite_etica.url }}" target="_blank" class="btn btn-sm btn-success">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% else %}
+            <a href="" target="_blank" class="btn btn-sm btn-warning disabled">
+              {% bootstrap_icon 'download' %}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          <b>Palavras-chave</b><br><br>
+          {{ object.submissao.palavras_chave }}
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 
 <form class="form" role="form" method="POST" enctype="multipart/form-data" name="form_avaliacao_suplente"> 
   {% csrf_token %}
   {{ form.non_field_errors }} 
-    <!-- avaliador suplente -->
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <table class="table table-condensed table-responsive">
-          <thead>
-            <tr>
-              <th>Critérios de Avaliação</th>
-              <th>Peso</th>
-              <th>Avaliação (0 a 10)</th>
-              <th>Final</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                {{ form.merito_desenvolvimento_suplente.label|upper }}
-                <ul>
-                  <li>Adequação entre teoria, método e objetivos</li>
-                  <li>Atualização e adequação da bibliografia selecionada</li>
-                  <li>Domínio do referencial teórico e bibliográfico</li>
-                  <li>Análise crítica do problema e da solução</li>
-                  <li>Contribuição pessoal</li>
-                  <li>Contribuição para a área de conhecimento (aplicabilidade e/ou<br>características inovadoras)</li>
-                  <li>Consistência com a proposta apresentada</li>
-                </ul>
-              </td>
-              <td>
-                <input class="form-control" id="id_peso_merito_desenvolvimento_suplente" value="{{ object.dic_pesos.merito_desenvolvimento_responsavel_suplente }}" readonly>
-              </td>
-              <td>
-                {{ form.merito_desenvolvimento_suplente }}
-                <div class="text-danger">{{ form.merito_desenvolvimento_suplente.errors }}</div>
-              </td>
-              <td>
-                <input class="form-control" id="id_nota_merito_desenvolvimento_suplente" readonly>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {{ form.merito_redacao_suplente.label|upper }}
-                <ul>
-                  <li>Organização do trabalho</li>
-                  <li>Coerência interna e progressão lógico-semântica</li>
-                  <li>Bibliografia adequada e completa</li>
-                  <li>Atendimento as normas IEEE</li>
-                  <li>Redação clara e inteligível com correção gramatical</li>
-                  <li>Introdução objetiva e precisa</li>
-                  <li>Conclusão crítica</li>                  
-                </ul>
-              </td>
-              <td>
-                <input class="form-control" id="id_peso_merito_redacao_suplente" value="{{ object.dic_pesos.merito_redacao_responsavel_suplente }}" readonly>
-              </td>
-              <td>
-                {{ form.merito_redacao_suplente }}
-                <div class="text-danger">{{ form.merito_redacao_suplente.errors }}</div>
-              </td>
-              <td>
-                <input class="form-control" id="id_nota_merito_redacao_suplente" readonly>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {{ form.merito_apresentacao_suplente.label|upper }}
-                <ul>
-                  <li>Domínio do Assunto</li>
-                  <li>Organização do Conteúdo</li>
-                  <li>Distribuição adequada do tempo</li>
-                </ul>
-              </td>
-              <td>
-                <input class="form-control" id="id_peso_merito_apresentacao_suplente" value="{{ object.dic_pesos.merito_apresentacao_responsavel_suplente }}" readonly>
-              </td>
-              <td>
-                {{ form.merito_apresentacao_suplente }} 
-                <div class="text-danger">{{ form.merito_apresentacao_suplente.errors }}</div>
-              </td>
-              <td>
-                <input class="form-control" id="id_nota_merito_apresentacao_suplente" readonly>
-              </td>
-            </tr>
-            <td><b>NOTA FINAL</b></td>
-              <td></td>
-              <td></td>
-              <td>  
-                <b>
-                  <input class="form-control" id="id_nota_final_suplente" readonly>
-                </b>
-                <div class='hidden'>
-                  {{ form.nota_final_suplente }}
-                </div>
-              </td>
-          </tbody>
-        </table>
-        {% bootstrap_field form.parecer_avaliador_suplente %}
-        {% if object.rebanca == 'SIM'%}
-            <hr>
-            <h2><span class="label label-warning">REBANCA</span></h2>
-            <hr>
-            {% bootstrap_field form.parecer_reavaliacao_avaliador_suplente %}<br>
-            <p>
-              Caso queira enviar novamente arquivo com correções, pode substituir o arquivo de sugestões anterior.
-            </p>
-          {% endif %}
-        {% bootstrap_field form.arquivo_corrigido_suplente %}
+  <!-- avaliador suplente -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Avaliador: {{ object.avaliador_suplente.nome }} <br><br>
+        Status do parecer: 
+        {% if object.dt_avaliacao_suplente %}
+          <span class="label label-success">
+            Parecer enviado em: {{ object.dt_avaliacao_suplente|date:"d/m/Y H:i" }} 
+          </span>
+        {% else %}
+          <span class="label label-warning">
+            Avaliação não finalizada
+          </span>
+        {% endif %}
+      </h3>
     </div>
-  </div>
+    <div class="panel-body">
+      <table class="table table-condensed table-responsive">
+        <thead>
+          <tr>
+            <th>Critérios de Avaliação | <span class="label label-info">Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.<span></th>
+            <th>Avaliação<br> (1 a 5)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{ form.merito_relevancia_suplente.label|upper }}
+            </td>              
+            <td>
+              {{ form.merito_relevancia_suplente }}
+              <div class="text-danger">{{ form.merito_relevancia_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_contribuicao_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_contribuicao_suplente }}
+              <div class="text-danger">{{ form.merito_contribuicao_suplente.errors }}</div>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_metodologia_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_metodologia_suplente }} 
+              <div class="text-danger">{{ form.merito_metodologia_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_fundamentacao_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_fundamentacao_suplente }} 
+              <div class="text-danger">{{ form.merito_fundamentacao_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_clareza_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_clareza_suplente }} 
+              <div class="text-danger">{{ form.merito_clareza_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_referencias_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_referencias_suplente }} 
+              <div class="text-danger">{{ form.merito_referencias_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_resultados_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_resultados_suplente }} 
+              <div class="text-danger">{{ form.merito_resultados_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ form.merito_conclusao_suplente.label|upper }}
+            </td>
+            <td>
+              {{ form.merito_conclusao_suplente }} 
+              <div class="text-danger">{{ form.merito_conclusao_suplente.errors }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>MÉDIA FINAL</b>
+            </td>
+            <td>  
+              <b>
+                <input class="form-control" id="id_nota_final_suplente" readonly>
+              </b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {% bootstrap_field form.parecer_avaliador_suplente %}
+      {% if object.rebanca == 'SIM'%}
+        <h3><span class="label label-warning">Rebanca</span></h3>
+        {% bootstrap_field form.parecer_reavaliacao_avaliador_suplente %}
+      {% endif %}
+      {% bootstrap_field form.arquivo_corrigido_suplente %}
+    </div>
+  </div>   
   {% buttons submit='Gravar' %}
     <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
   {% endbuttons %}

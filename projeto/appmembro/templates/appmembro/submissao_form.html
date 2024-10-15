@@ -20,7 +20,11 @@
     {% comment %} fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 
                   'arquivo_comite_etica', 'observacoes']
      {% endcomment %}
-    {% bootstrap_field form.evento %}
+
+    {% if not object %}
+        {% bootstrap_field form.evento %}
+    {% endif %}
+
     {% bootstrap_field form.titulo %}
     {% bootstrap_field form.resumo %}
     {% bootstrap_field form.abstract %}
@@ -36,11 +40,14 @@
     
     {% if object.status == 'APROVADO' %}
       <h3>Arquivo final do artigo!</h3>
+      {% bootstrap_alert 'Lembre de preencher no texto os autores e seus respectivos dados conforme modelo de publicação' 'warning' %}
       {% bootstrap_field form.arquivo_final %}
+      {% bootstrap_field form.arquivo_comite_etica %}
+      {% bootstrap_field form.observacoes %}
     {% endif %}
 
     {% buttons submit='Gravar' %}
-       <a href="javascript:history.go(-1);" class="btn btn-info" role="button">Voltar</a>
+       <a href="javascript:history.go(-1);" class="btn btn-warning" role="button">Voltar</a>
     {% endbuttons %}
 </form>
 {% endblock %}

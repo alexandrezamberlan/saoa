@@ -103,7 +103,37 @@ class Avaliacao(models.Model):
             self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
         elif self.nota_final_responsavel and self.nota_final_suplente:
             self.media_final_avaliacao = (self.nota_final_responsavel + self.nota_final_suplente) / 2
-    
+
+    def calcular_nota_responsavel(self):
+        if self.parecer_avaliador_responsavel:
+            self.nota_final_responsavel = round((int(self.merito_relevancia_responsavel)+
+                                           int(self.merito_contribuicao_responsavel)+
+                                           int(self.merito_metodologia_responsavel)+
+                                           int(self.merito_fundamentacao_responsavel)+
+                                           int(self.merito_clareza_responsavel)+
+                                           int(self.merito_referencias_responsavel)+
+                                           int(self.merito_resultados_responsavel))/7, 1)
+
+    def calcular_nota_suplente(self):
+        if self.parecer_avaliador_suplente:
+            self.nota_final_suplente = round((int(self.merito_relevancia_suplente)+
+                                           int(self.merito_contribuicao_suplente)+
+                                           int(self.merito_metodologia_suplente)+
+                                           int(self.merito_fundamentacao_suplente)+
+                                           int(self.merito_clareza_suplente)+
+                                           int(self.merito_referencias_suplente)+
+                                           int(self.merito_resultados_suplente))/7, 1)
+
+    def mudar_status_submissao(self):
+        submissao = self.submissao
+
+        if submissao.status == 'EM AVALIACAO' and self.parecer_avaliador_responsavel and self.parecer_avaliador_suplente:
+            if self.media_final_avaliacao >= 3.5:
+                submissao.status = 'APROVADO'
+            else:
+                submissao.status = 'REPROVADO'
+            submissao.save()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = gerar_hash()
@@ -114,7 +144,10 @@ class Avaliacao(models.Model):
         if not self.id:
             self.submissao.status = 'EM AVALIACAO'
             self.submissao.save()
-        self.calcular_media_final_avaliacao()    
+        self.calcular_nota_responsavel()
+        self.calcular_nota_suplente()
+        self.calcular_media_final_avaliacao()
+        self.mudar_status_submissao()
         super(Avaliacao, self).save(*args, **kwargs)
     
     @property
@@ -131,6 +164,14 @@ class Avaliacao(models.Model):
 
     @property
     def get_avaliacao_coordenador_suplente_url(self):
+        return reverse('minha_avaliacao_suplente', kwargs={'slug': self.slug})
+
+    @property
+    def get_admin_avaliacao_responsavel_url(self):
+        return reverse('minha_avaliacao_responsavel', kwargs={'slug': self.slug})
+
+    @property
+    def get_admin_avaliacao_suplente_url(self):
         return reverse('minha_avaliacao_suplente', kwargs={'slug': self.slug})
 
     # para appmembro  
@@ -152,32 +193,7 @@ class Avaliacao(models.Model):
             return (self.nota_final_responsavel + self.nota_final_suplente + self.nota_final_convidado) / 3
         
         return (self.nota_final_responsavel + self.nota_final_suplente) / 2
-
-    @property
-    def get_parecer_liberado_url(self):
-        return reverse('avaliacao_parecer_detail', kwargs={'slug': self.slug})
     
     @property
-    def get_parecer_liberado_aluno_url(self):
-        return reverse('appaluno_avaliacao_parecer_detail', kwargs={'slug': self.slug})
-    
-    @property
-    def get_parecer_liberado_orientador_url(self):
-        return reverse('appmembro_avaliacao_parecer_detail', kwargs={'slug': self.slug})
-
-    @property
-    def get_parecer_impressao_url(self):
-        return reverse('avaliacao_pdf', kwargs={'slug': self.slug})
-    
-    @property
-    def get_termo_banca_impressao_url(self):
-        return reverse('avaliacao_termobanca_pdf', kwargs={'slug': self.slug})
-    
-    @property
-    def get_termo_biblioteca_impressao_url(self):
-        return reverse('avaliacao_termobiblioteca_pdf', kwargs={'slug': self.slug})
-    
-    @property
-    def get_meu_parecer_impressao_url(self):
-        return reverse('minha_avaliacao_pdf', kwargs={'slug': self.slug})
-    
+    def get_parecer_liberado_membro_url(self):
+        return reverse('appmembro_avaliacao_detail', kwargs={'slug': self.slug})

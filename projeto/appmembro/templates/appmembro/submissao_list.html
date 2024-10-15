@@ -95,27 +95,15 @@
 							{{ submissao.get_status_display|upper }}							
 						</td>						
 						<td class="text-center">
-							<span data-toggle="tooltip"  title='Parecer avaliador 1'>
-								{% if submissao.get_segundo_arquivo_parecer_comissao %}
-									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
-										{% bootstrap_icon 'download' %}
-									</a>
-								{% endif %}
-							</span>
-							<span data-toggle="tooltip"  title='Parecer avaliador 2'>
-								{% if submissao.get_segundo_arquivo_parecer_comissao %}
-									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
-										{% bootstrap_icon 'download' %}
-									</a>
-								{% endif %}
-							</span>
-							<span data-toggle="tooltip"  title='Parecer avaliador 3'>
-								{% if submissao.get_segundo_arquivo_parecer_comissao %}
-									<a href="{{ submissao.get_segundo_arquivo_parecer_comissao.url }}" target="_blank" class="btn btn-sm btn-success">
-										{% bootstrap_icon 'download' %}
-									</a>								
-								{% endif %}
-							</span>
+							{% if submissao.avaliacao and submissao.avaliacao.parecer_avaliador_responsavel and submissao.avaliacao.parecer_avaliador_suplente %}
+                                <a href="{{ submissao.avaliacao.get_parecer_liberado_membro_url }}" class="btn btn-sm btn-success">
+                                    {% bootstrap_icon 'zoom-in' %}
+                                </a>
+                            {% else %}
+                                <a href="#" data-toggle="tooltip" title="Aguardando pareceres..." class="btn btn-sm btn-success disabled">
+                                    {% bootstrap_icon 'zoom-in' %}
+                                </a>
+                            {% endif %}
 						</td>
 						{% if submissao.status == 'EM EDICAO' or submissao.status == 'APROVADO' %}
 							<td class="text-center">

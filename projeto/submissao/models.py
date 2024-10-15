@@ -28,7 +28,8 @@ class Submissao(models.Model):
         ('APROVADO', 'Aprovado' ),
         ('RETIRADO PELO RESPONSAVEL', 'Retirado pelo responsável'),
         ('RETIRADO PELO COORDENADOR', 'Retirado pelo coordenador' ),
-        ('REPROVADO', 'Reprovado' ),        
+        ('REPROVADO', 'Reprovado'),
+        ('FINALIZADO', 'Finalizado')
     )      
     responsavel = models.ForeignKey('usuario.Usuario', verbose_name= 'Autor responsável pela submissão *', on_delete=models.PROTECT, related_name='responsavel')
     evento = models.ForeignKey('evento.Evento', verbose_name= 'Evento para a submissão *', on_delete=models.PROTECT, related_name='evento')
@@ -39,7 +40,7 @@ class Submissao(models.Model):
     abstract = models.TextField('Abstract *', max_length=1200, help_text='Máximo caracteres: 1200. Se for colar texto de outro aplicativo, certifique-se que o abstract esteja completo')
     palavras_chave =  models.CharField('Palavras-chave *', max_length=100, help_text='Escreva as palavras-chave separadas por ponto-e-vígura. Exemplo: Redes Neurais; Aprendizado de Máquina; Descoberta de Conhecimento')
     arquivo_sem_autores = models.FileField('Arquivo PDF de para avaliação (sem autores e identificação)', upload_to='midias', help_text='Utilize arquivo .PDF')
-    arquivo_final = models.FileField('Arquivo PDF corrigido para a versão final',null=True, blank=True, upload_to='midias', help_text='Utilize arquivo .PDF')
+    arquivo_final = models.FileField('Arquivo PDF corrigido para a versão final', null=True, blank=True, upload_to='midias', help_text='Utilize arquivo .PDF e lembre de incluir dados dos autores')
     arquivo_comite_etica = models.FileField('Arquivo ZIPADO com documentação necessária de pesquisa em Humanos e Animais',null=True, blank=True, upload_to='midias', help_text='Utilize arquivo compactado .ZIP')
     status = models.CharField('Status da submissão', max_length=25, choices=STATUS, default='EM EDICAO')
     observacoes = models.TextField('Caso necessite, área para registro de justificativas e/ou apontamentos para o responsável da submissão', max_length=500,null=True,blank=True)
@@ -58,11 +59,16 @@ class Submissao(models.Model):
     def __str__(self):
         return '%s | %s' % (self.responsavel, self.titulo)
 
+    def atualizar_status_para_publicar(self):
+        if self.status == 'APROVADO' and self.arquivo_final:
+            self.status = 'FINALIZADO'
+
     def save(self, *args, **kwargs):        
         if not self.slug:
             self.slug = gerar_hash()
         self.titulo = self.titulo.upper()
-        self.palavras_chave = self.palavras_chave.upper()        
+        self.palavras_chave = self.palavras_chave.upper()
+        self.atualizar_status_para_publicar()
         super(Submissao, self).save(*args, **kwargs)
 
     @property

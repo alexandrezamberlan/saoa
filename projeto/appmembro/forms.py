@@ -42,12 +42,18 @@ class MembroCreateForm(forms.ModelForm):
 
 
 class SubmissaoForm(forms.ModelForm):
-    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos_data_aberta.all(), required=True)   
+    evento = forms.ModelChoiceField(label='Evento para a submissão *', queryset=Evento.eventos_ativos_data_aberta.all(), required=True)
  
     class Meta:
         model = Submissao
-        fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final', 
+        fields = ['evento', 'titulo', 'resumo' , 'abstract', 'palavras_chave', 'arquivo_sem_autores', 'arquivo_final',
                   'arquivo_comite_etica', 'observacoes']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance.id:
+            del self.fields['evento']
 
     # def clean_colaborador(self):
     #     colaborador = self.cleaned_data.get('colaborador')
@@ -67,7 +73,8 @@ class BuscaSubmissaoForm(forms.Form):
         ('APROVADO', 'Aprovado' ),
         ('RETIRADO PELO RESPONSAVEL', 'Retirado pelo responsável'),
         ('RETIRADO PELO COORDENADOR', 'Retirado pelo coordenador' ),
-        ('REPROVADO', 'Reprovado' ),  
+        ('REPROVADO', 'Reprovado' ),
+        ('FINALIZADO', 'Finalizado')
     )         
     
     situacao = forms.ChoiceField(label='Status da submissão', choices=STATUS, required=False)

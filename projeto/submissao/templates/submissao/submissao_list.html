@@ -61,6 +61,10 @@
 						</td>	
 						<td>
 							{{ submissao.get_status_display.upper }}
+                            <br>
+                            <span class="badge">
+                                {{ submissao.avaliacao.media_final_avaliacao|floatformat:1 }}
+                            </span>
 						</td>
 						<td>
 							{{ submissao.titulo }}<br>

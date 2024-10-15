@@ -79,6 +79,8 @@ class SubmissaoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateVi
     
     def get_success_url(self):
         messages.success(self.request, 'Submissão atualizada com sucesso na plataforma!')
+        if self.request.user.tipo in ['ADMINISTRADOR', 'COORDENADOR']:
+            return reverse('submissao_list')
         return reverse(self.success_url) 
     
 

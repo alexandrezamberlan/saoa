@@ -17,8 +17,10 @@ urlpatterns = [
 	path('cad/', AvaliacaoCreateView.as_view(), name='avaliacao_create'),
 	path('<slug:slug>/', AvaliacaoUpdateView.as_view(), name='avaliacao_update'),
 
-   	path('minhas-avaliacoes/avaliacao/<slug:slug>/responsavel/', MinhaAvaliacaoResponsavelUpdateView.as_view(), name='minha_avaliacao_responsavel'),
-   	path('minhas-avaliacoes/avaliacao/<slug:slug>/suplente/', MinhaAvaliacaoSuplenteUpdateView.as_view(), name='minha_avaliacao_suplente'),
+	path('minhas-avaliacoes/avaliacao/<slug:slug>/responsavel/', MinhaAvaliacaoResponsavelUpdateView.as_view(),
+		 name='minha_avaliacao_responsavel'),
+	path('minhas-avaliacoes/avaliacao/<slug:slug>/suplente/', MinhaAvaliacaoSuplenteUpdateView.as_view(),
+		 name='minha_avaliacao_suplente'),
 
 	path('<slug:slug>/delete/', AvaliacaoDeleteView.as_view(), name='avaliacao_delete'),	
  	# path('<slug:slug>/pdf/', AvaliacaoPdfView.as_view(), name='avaliacao_pdf'),
