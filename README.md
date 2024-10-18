@@ -7,7 +7,7 @@
     - em submissao coautores (lista de usuários ordinários)
     - em evento numero_maximo de autores        
     - em submissao enviar email de registro de submissão para o responsável       
-    - em evento categoria ou subárea do trabalho (???)
+    - (OK) em evento categoria ou subárea do trabalho (???)
     - (OK) no autocadastro termo de uso e política de funcionamento
     - criar esquema de mandar email:
         - (OK) no autocadastro
@@ -18,7 +18,7 @@
     - fazer logout quando o usuário conectado por 30 min ou quando fechar navegador
     - validar em evento se coordenador responsa'vel e coordenador suplemente são a mesma pessoa
     - na visão de coordenador, possibilitar que o usuário envie trabalhos mas para outros eventos, exceto para os eventos que coordenada. O mesmo para o coordenador responsável
-    - disponibilizar app no servidor lapinf.ufn
+    - (OK) disponibilizar app no servidor lapinf.ufn
         - mysql
         - gunicorn
         - nginx
