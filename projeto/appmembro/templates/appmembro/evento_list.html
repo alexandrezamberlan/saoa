@@ -27,9 +27,11 @@
 			<thead>
 				<th>Evento</th>
 				<th>Email comissão</th>
-				<th  class="text-center">Site</th>
-				<th  class="text-center">Templates</th>
-				<th>Data limite</th>
+				<th class="text-center">Site</th>
+				<th class="text-center">Templates</th>
+				<th class="text-center">Data limite submissão</th>
+				<th class="text-center">Data divulgação resultados</th>
+				<th class="text-center">Data reenvio trabalho corrigido</th>
 			</thead>
 			<tbody>
 				{% for evento in object_list %}
@@ -63,9 +65,17 @@
 								</a>
 							{% endif %}
 						</td>
-						<td>
+						<td class="text-center">
 							<b>
 								{{ evento.data_limite_trabalhos|date:'d/m/Y' }}
+							</b>
+						</td>	
+						<td class="text-center">
+							{{ evento.data_divulgacao_trabalhos_aprovados|date:'d/m/Y' }}
+						</td>	
+						<td class="text-center">
+							<b>
+								{{ evento.data_limite_reenvio_trabalhos_corrigidos|date:'d/m/Y' }}
 							</b>
 						</td>											
 					</tr>

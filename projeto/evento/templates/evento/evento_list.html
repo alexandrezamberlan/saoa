@@ -36,6 +36,9 @@
 				<th>Email comissão</th>
 				<th class="text-center">Templates</th>
 				<th class="text-center">Data submissão</th>
+				<th class="text-center">Data divulgação</th>
+				<th class="text-center">Data reenvio</th>
+				<th class="text-center">Resultados publicados?</th>
 				<th class="text-center">Ativo</th>
 				<th class="text-center">Editar</th>
 				<th class="text-center">Excluir</th>
@@ -82,6 +85,19 @@
 							{{ evento.data_limite_trabalhos|date:'d/m/Y' }}
 						</td>											
 						<td class="text-center">
+							{{ evento.data_divulgacao_trabalhos_aprovados|date:'d/m/Y' }}
+						</td>
+						<td class="text-center">
+							{{ evento.data_limite_reenvio_trabalhos_corrigidos|date:'d/m/Y' }}
+						</td>
+						<td class="text-center">
+							{% if evento.publicado %}
+								SIM
+							{% else %}
+								NÃO
+							{% endif %}
+						</td>
+						<td class="text-center">
 							{% if evento.is_active %}
 								{% bootstrap_icon 'thumbs-up' size='sm' %}
 							{% else %}
@@ -98,7 +114,7 @@
 				{% endfor %}
 			</tbody>
 			<tfoot>
-				<th colspan="9">
+				<th colspan="12">
 					Total de registros: {{ object_list|length }}
 				</th>
 			</tfoot>
