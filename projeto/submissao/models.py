@@ -40,7 +40,7 @@ class Submissao(models.Model):
     abstract = models.TextField('Abstract *', max_length=1200, help_text='Máximo caracteres: 1200. Se for colar texto de outro aplicativo, certifique-se que o abstract esteja completo')
     palavras_chave =  models.CharField('Palavras-chave *', max_length=100, help_text='Escreva as palavras-chave separadas por ponto-e-vígura. Exemplo: Redes Neurais; Aprendizado de Máquina; Descoberta de Conhecimento')
     arquivo_sem_autores = models.FileField('Arquivo PDF de para avaliação (sem autores e identificação)', upload_to='midias', help_text='Utilize arquivo .PDF')
-    arquivo_final = models.FileField('Arquivo PDF corrigido para a versão final', null=True, blank=True, upload_to='midias', help_text='Utilize arquivo .PDF e lembre de incluir dados dos autores')
+    arquivo_final = models.FileField('Arquivo corrigido para a versão final', null=True, blank=True, upload_to='midias', help_text='Utilize arquivo .DOCX e lembre de incluir dados dos autores')
     arquivo_comite_etica = models.FileField('Arquivo ZIPADO com documentação necessária de pesquisa em Humanos e Animais',null=True, blank=True, upload_to='midias', help_text='Utilize arquivo compactado .ZIP')
     status = models.CharField('Status da submissão', max_length=25, choices=STATUS, default='EM EDICAO')
     observacoes = models.TextField('Caso necessite, área para registro de justificativas e/ou apontamentos para o responsável da submissão', max_length=500,null=True,blank=True)
