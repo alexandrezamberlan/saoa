@@ -67,7 +67,7 @@ class Avaliacao(models.Model):
     merito_resultados_suplente = models.CharField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_length=1,choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_suplente = models.CharField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_length=1,choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    nota_final_suplente = models.DecimalField('Final Avaliador 2',  max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)         
+    nota_final_suplente = models.DecimalField('Final Avaliador 2',  max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)         
     arquivo_corrigido_suplente = models.FileField('Arquivo do artigo corrigido pelo avaliador 2', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #campos de parecer avaliador convidado
