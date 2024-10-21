@@ -106,13 +106,22 @@ class Avaliacao(models.Model):
 
     def calcular_nota_responsavel(self):
         if self.parecer_avaliador_responsavel:
+            #merito_relevancia_responsavel
+            #merito_contribuicao_responsavel
+            #merito_metodologia_responsavel
+            #merito_fundamentacao_responsavel
+            #merito_clareza_responsavel
+            #merito_referencias_responsavel
+            #merito_resultados_responsavel
+            #merito_conclusao_responsavel
             self.nota_final_responsavel = round((int(self.merito_relevancia_responsavel)+
                                            int(self.merito_contribuicao_responsavel)+
                                            int(self.merito_metodologia_responsavel)+
                                            int(self.merito_fundamentacao_responsavel)+
                                            int(self.merito_clareza_responsavel)+
                                            int(self.merito_referencias_responsavel)+
-                                           int(self.merito_resultados_responsavel))/7, 1)
+                                           int(self.merito_resultados_responsavel)+
+                                           int(self.merito_conclusao_responsavel))/8, 1)
 
     def calcular_nota_suplente(self):
         if self.parecer_avaliador_suplente:
@@ -122,7 +131,8 @@ class Avaliacao(models.Model):
                                            int(self.merito_fundamentacao_suplente)+
                                            int(self.merito_clareza_suplente)+
                                            int(self.merito_referencias_suplente)+
-                                           int(self.merito_resultados_suplente))/7, 1)
+                                           int(self.merito_resultados_suplente)+
+                                           int(self.merito_conclusao_suplente))/8, 1)
 
     def mudar_status_submissao(self):
         submissao = self.submissao
