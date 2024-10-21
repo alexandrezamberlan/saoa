@@ -130,7 +130,8 @@
 							{% endif %}
 						</td> {% endcomment %}
 						<td class="text-center">
-							{% if avaliacao.parecer_liberado == 'SIM' %}
+							{{ avaliacao.parecer_liberado }}
+							{% comment %} {% if avaliacao.parecer_liberado == 'SIM' %}
 								<span data-toggle="tooltip"  title='Parecer liberado'>
 									<a href="{{ avaliacao.get_parecer_liberado_url }}" class="btn btn-sm btn-success">
 										{% bootstrap_icon 'download' %}
@@ -140,7 +141,7 @@
 								<span class="label label-primary">
 									NÃO
 								</span>
-							{% endif %}	
+							{% endif %}	 {% endcomment %}
 						</td>
 						<td class="text-center">
 							<span data-toggle="tooltip"  title='Gerenciar avaliação'>
