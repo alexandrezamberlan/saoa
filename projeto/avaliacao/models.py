@@ -50,7 +50,7 @@ class Avaliacao(models.Model):
     merito_resultados_responsavel = models.CharField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_responsavel = models.CharField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    nota_final_responsavel = models.DecimalField('Final Avaliador 1', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)    
+    nota_final_responsavel = models.DecimalField('Final Avaliador 1', max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)    
     arquivo_corrigido_responsavel = models.FileField('Arquivo do artigo corrigido pelo avaliador 1', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
     #Campos de parecer avaliador suplente
@@ -84,10 +84,10 @@ class Avaliacao(models.Model):
     merito_resultados_convidado = models.CharField('Resultados e discussões: Os resultados são apresentados e discutidos adequadamente?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_conclusao_convidado = models.CharField('Conclusões: O trabalho traz considerações finais ou conclusão, apresentando reflexões,  avanços ou soluções ao tema abordado, conforme os objetivos propostos?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     
-    nota_final_convidado = models.DecimalField('Final Avaliador 3',  max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)         
+    nota_final_convidado = models.DecimalField('Final Avaliador 3',  max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True, default = 0)         
     arquivo_corrigido_convidado = models.FileField('Arquivo do artigo corrigido pelo avaliador 3', null=True, blank=True, upload_to='midias', help_text='Use formato .pdf para enviar seu arquivo corrigido')
 
-    media_final_avaliacao = models.DecimalField('Média Final', max_digits=3, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True)    
+    media_final_avaliacao = models.DecimalField('Média Final', max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5)], null=True, blank=True)    
     intercorrencias = models.TextField('Intercorrências do processo de avaliação (20000 caracteres)', max_length=20000, null=True, blank=True, help_text='Coordenador, use esse espaço para anotar qualquer intercorrência do processo de avaliação!')
     
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
