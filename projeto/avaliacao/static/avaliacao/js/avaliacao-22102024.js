@@ -47,17 +47,17 @@ function calcularNotaAvaliadorConvidado(){
 function calcularMediaFinal(){
     let media = 0;
     if($("#id_nota_final_convidado").val()==undefined){
-        media = (parseInt($("#id_nota_final_responsavel").val()) +
-                 parseInt($("#id_nota_final_suplente").val())
+        media = (parseFloat($("#id_nota_final_responsavel").val()) +
+                 parseFloat($("#id_nota_final_suplente").val())
                 ) / 2;
     }else{
-        media = (parseInt($("#id_nota_final_responsavel").val()) +
-                 parseInt($("#id_nota_final_suplente").val())+
-                 parseInt($("#id_nota_final_convidado").val())
+        media = (parseFloat($("#id_nota_final_responsavel").val()) +
+                 parseFloat($("#id_nota_final_suplente").val())+
+                 parseFloat($("#id_nota_final_convidado").val())
                 ) / 3;
     }
     
-    $("#id_media_final").val(media.toFixed(1));
+    $("#id_media_final").val(media.toFixed(2));
 }
 
 $(document).ready(function () {
