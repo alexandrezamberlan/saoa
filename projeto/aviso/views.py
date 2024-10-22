@@ -27,7 +27,6 @@ class AvisoCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     fields = ['titulo', 'texto', 'destinatario', 'enviado', 'is_active']
     success_url = 'aviso_list'
     
-    
     def form_valid(self, form):
         aviso = form.save(commit=False)
         
@@ -72,6 +71,10 @@ class AvisoUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
 class AvisoDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Aviso
     success_url = 'aviso_list'
+    
+    def get_success_url(self):
+        messages.success(self.request, 'Aviso removido com sucesso na plataforma!')
+        return reverse(self.success_url)
 
     def delete(self, request, *args, **kwargs):
         """
@@ -90,7 +93,7 @@ class AvisoDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
 class AvisoEnviaEmail(LoginRequiredMixin, StaffRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         
-        aviso = Aviso.objects.get(id=kwargs.get('pk'))
+        aviso = Aviso.objects.get(slug=kwargs.get('slug'))
 
         if aviso.destinatario == 'TODOS':
             destinatarios = Usuario.objects.filter(is_active=True)
