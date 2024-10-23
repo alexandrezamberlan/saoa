@@ -48,7 +48,12 @@
 				{% for usuario in object_list %}				
 					<tr>
 						<td>{{ usuario.nome }}</td> 
-						<td>{{ usuario.tipo }}</td>
+						<td>
+							{{ usuario.tipo }}<br>
+							{% if usuario.eh_avaliador %}
+								<small class="badge badge-info">Avaliador</small>
+							{% endif %}
+						</td>
 						<td>
 							{{ usuario.email }} <br>
 							<a href="https://api.whatsapp.com/send?phone=55{{ usuario.celular }}" target="_blank"><small class="badge">{% bootstrap_icon 'comment' %} {{ usuario.celular }}</small></a>	

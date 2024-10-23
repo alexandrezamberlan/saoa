@@ -63,7 +63,7 @@ class UsuarioListView(LoginRequiredMixin, CoordenadorRequiredMixin, ListView):
 
 class UsuarioCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     model = Usuario
-    fields = ['tipo', 'nome', 'titulacao', 'area', 'instituicao', 'celular', 'cpf', 'email', 'password', 'aceita_termo', 'is_active']
+    fields = ['tipo', 'nome', 'eh_avaliador', 'titulacao', 'area', 'instituicao', 'celular', 'cpf', 'email', 'password', 'aceita_termo', 'is_active']
     success_url = 'usuario_list'
     
     def get_success_url(self):
@@ -73,7 +73,7 @@ class UsuarioCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
 
 class UsuarioUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     model = Usuario
-    fields = ['tipo', 'nome', 'titulacao', 'area', 'instituicao', 'celular', 'cpf', 'email', 'is_active']
+    fields = ['tipo', 'nome', 'eh_avaliador', 'titulacao', 'area', 'instituicao', 'celular', 'cpf', 'email', 'is_active']
     success_url = 'usuario_list'
     
     def get_success_url(self):
@@ -85,9 +85,9 @@ class UsuarioDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Usuario
     success_url = 'usuario_list'
     
-    # def get_success_url(self):
-    #     messages.success(self.request, 'Atleta ou treinador removido com sucesso da plataforma!')
-    #     return reverse(self.success_url)
+    def get_success_url(self):
+        messages.success(self.request, 'Usuário removido com sucesso da plataforma!')
+        return reverse(self.success_url)
 
 
     def delete(self, request, *args, **kwargs):

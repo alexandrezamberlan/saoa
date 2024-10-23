@@ -8,9 +8,9 @@ from .models import Avaliacao
 
 
 class AvaliacaoForm(forms.ModelForm):
-    avaliador_responsavel = forms.ModelChoiceField(label='Selecione um membro como avaliador 1 *', queryset=Usuario.usuarios_ativos.all(), required=True)
-    avaliador_suplente = forms.ModelChoiceField(label='Selecione um membro como avaliador 2 *', queryset=Usuario.usuarios_ativos.all(), required=True)
-    # avaliador_convidado = forms.ModelChoiceField(label='Selecione um membro como avaliador 3', queryset=Usuario.usuarios_ativos.all(), required=False)
+    avaliador_responsavel = forms.ModelChoiceField(label='Selecione um membro como avaliador 1 *', queryset=Usuario.avaliadores.all(), required=True)
+    avaliador_suplente = forms.ModelChoiceField(label='Selecione um membro como avaliador 2 *', queryset=Usuario.avaliadores.all(), required=True)
+    # avaliador_convidado = forms.ModelChoiceField(label='Selecione um membro como avaliador 3', queryset=Usuario.avaliadores.all(), required=False)
 
     
     class Meta:
