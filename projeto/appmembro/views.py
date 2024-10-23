@@ -39,7 +39,7 @@ class AboutView(LoginRequiredMixin, MembroRequiredMixin, TemplateView):
     template_name = 'appmembro/about.html'
     
 
-class DadosMembroUpdateView(LoginRequiredMixin, MembroRequiredMixin, UpdateView):
+class DadosMembroUpdateView(LoginRequiredMixin, UpdateView):
     model = Usuario
     template_name = 'appmembro/dados_membro_form.html'
     form_class = MembroCreateForm  

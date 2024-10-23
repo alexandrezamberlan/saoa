@@ -15,7 +15,12 @@
 </head>
 
 {% block bootstrap3_content %}
-	{% include 'appmembro/includes/_menu_principal.html' %}
+    {% if user.tipo == 'MEMBRO' %}
+        {% include 'appmembro/includes/_menu_principal.html' %}
+    {% elif user.tipo == 'COORDENADOR' or user.tipo == 'ADMINISTRADOR' %}
+        {% include 'core/includes/_menu_principal.html' %}
+    {% endif %}
+    
     <br><br><br>
     <div class="container-fluid">
         <h2>{% block title %}(no title){% endblock %}</h2>
