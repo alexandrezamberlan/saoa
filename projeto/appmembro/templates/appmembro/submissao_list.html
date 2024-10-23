@@ -92,7 +92,11 @@
 							{% endif %}
 						</td>
 						<td class="text-center">
-							{{ submissao.get_status_display|upper }}							
+							{% if submissao.status == 'APROVADO' or submissao.status == 'REPROVADO'  and submissao.evento.publicado == False %}
+								Aguardando liberação organização
+							{% else %}
+								{{ submissao.get_status_display|upper }}							
+							{% endif %}
 						</td>						
 						<td class="text-center">
 							{% if submissao.avaliacao and submissao.avaliacao.parecer_avaliador_responsavel and submissao.avaliacao.parecer_avaliador_suplente %}
