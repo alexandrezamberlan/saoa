@@ -11,7 +11,7 @@ class EventoForm(forms.ModelForm):
 
     class Meta:
         model = Evento
-        fields = ['nome', 'tipo', 'descricao', 'site', 'instituicao', 'coordenador', 'coordenador_suplente', 'email', 'data_inicio', 'data_limite_trabalhos', 'data_divulgacao_trabalhos_aprovados', 'data_limite_reenvio_trabalhos_corrigidos', 'modelo_artigo', 'arquivo_modelo', 'publicado', 'is_active']
+        fields = ['nome', 'tipo', 'descricao', 'publicado', 'site', 'instituicao', 'coordenador', 'coordenador_suplente', 'email', 'data_inicio', 'data_limite_trabalhos', 'data_divulgacao_trabalhos_aprovados', 'data_limite_reenvio_trabalhos_corrigidos', 'modelo_artigo', 'arquivo_modelo',  'is_active']
 
 
 class BuscaEventoForm(forms.Form):        

@@ -34,7 +34,7 @@ class Evento(models.Model):
     modelo_artigo = models.CharField('Qual o modelo para artigos? ', max_length=150, help_text='Informe o modelo, como ABNT, SBC, IEEE')
     arquivo_modelo = models.FileField('Carregue arquivo zipado com modelos', null=True, blank=True, upload_to='midias', help_text='Utilize arquivo compactado do tipo zip')
     is_active = models.BooleanField('Ativo', default=True, help_text='Se ativo, o evento está liberado para chamada de artigos')
-    publicado = models.BooleanField('Resultados publicados', default=False, help_text='Se marcada a caixa, os resultados das avaliações serão exibidos aos autores de trabalhos')
+    publicado = models.BooleanField('PUBLICAR RESULTADOS APÓS AVALIAÇÕES?', default=False, help_text='Se marcada a caixa, os resultados das avaliações serão exibidos aos autores de trabalhos')
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
 
     objects = models.Manager()
