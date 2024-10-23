@@ -38,8 +38,8 @@ class Avaliacao(models.Model):
     
     #Campos de parecer avaliador responsavel
     dt_avaliacao_responsavel = models.DateTimeField('Data da avaliação do avaliador 1', null=True, blank=True)
-    parecer_avaliador_responsavel = models.TextField('Parecer do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_reavaliacao_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_avaliador_responsavel = models.TextField('Parecer do avaliador 1 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_responsavel = models.TextField('Parecer de REAVALIAÇÃO do avaliador 1 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     
     merito_relevancia_responsavel = models.CharField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_responsavel = models.CharField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -55,8 +55,8 @@ class Avaliacao(models.Model):
 
     #Campos de parecer avaliador suplente
     dt_avaliacao_suplente = models.DateTimeField('Data da avaliação do avaliador 2', null=True, blank=True)
-    parecer_avaliador_suplente = models.TextField('Parecer do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_reavaliacao_avaliador_suplente = models.TextField('Parecer de REAVALIAÇÃO do avaliador 2 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_avaliador_suplente = models.TextField('Parecer do avaliador 2 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_suplente = models.TextField('Parecer de REAVALIAÇÃO do avaliador 2 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
    
     merito_relevancia_suplente = models.CharField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_length=1,choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_suplente = models.CharField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_length=1,choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -72,8 +72,8 @@ class Avaliacao(models.Model):
 
     #campos de parecer avaliador convidado
     dt_avaliacao_convidado = models.DateTimeField('Data da avaliação do avaliador 3', null=True, blank=True)
-    parecer_avaliador_convidado = models.TextField('Parecer do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_reavaliacao_avaliador_convidado = models.TextField('Parecer de REAVALIAÇÃO do avaliador 3 (5000 caracteres)', max_length=5000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_avaliador_convidado = models.TextField('Parecer do avaliador 3 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_reavaliacao_avaliador_convidado = models.TextField('Parecer de REAVALIAÇÃO do avaliador 3 (10000 caracteres)', max_length=10000, null=True, blank=True, help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
     
     merito_relevancia_convidado = models.CharField('Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_convidado = models.CharField('Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', max_length=1, choices=NOTA, null=True, blank=True, help_text='De 1 a 5. Nota 1 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')

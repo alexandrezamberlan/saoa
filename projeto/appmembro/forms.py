@@ -90,8 +90,8 @@ class MinhaAvaliacaoResponsavelForm(forms.ModelForm):
         ('4', '4'),
         ('5', '5'),
     )
-    parecer_avaliador_responsavel = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_responsavel = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_responsavel = forms.CharField(label='Parecer do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_responsavel = forms.CharField(label='Parecer de rebanca do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_responsavel = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_responsavel = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -125,8 +125,8 @@ class MinhaAvaliacaoSuplenteForm(forms.ModelForm):
         ('4', '4'),
         ('5', '5'),
     )
-    parecer_avaliador_suplente = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_suplente = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_suplente = forms.CharField(label='Parecer do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_suplente = forms.CharField(label='Parecer de rebanca do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_suplente = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_suplente = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
@@ -159,8 +159,8 @@ class MinhaAvaliacaoConvidadoForm(forms.ModelForm):
         ('4', '4'),
         ('5', '5'),
     )
-    parecer_avaliador_convidado = forms.CharField(label='Parecer do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
-    parecer_rebanca_avaliador_convidado = forms.CharField(label='Parecer de rebanca do avaliador (5000 caracteres)', max_length=5000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
+    parecer_avaliador_convidado = forms.CharField(label='Parecer do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(), help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!')
+    parecer_rebanca_avaliador_convidado = forms.CharField(label='Parecer de rebanca do avaliador (10000 caracteres)', max_length=10000, widget=forms.widgets.Textarea(),  help_text='Atenção: se colar seu texto no campo, confira se ele coube no espaço!!', required=False)
     
     merito_relevancia_convidado = forms.ChoiceField(label='Relevância: O artigo aborda um problema atual e/ou relevante na área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
     merito_contribuicao_convidado = forms.ChoiceField(label='Contribuição: O trabalho apresenta contribuição para a área em que foi submetido ao evento?', choices=NOTA, help_text='De 0 a 5. Nota 0 equivale a NÃO atende, enquanto, nota 5 atende COMPLETAMENTE.')
