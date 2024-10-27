@@ -7,7 +7,9 @@ from django.db.models import Q
 from django.urls import reverse
 #from django.utils.translation import ugettext_lazy as _
 
+from avaliacao.models import Avaliacao
 from evento.models import Evento
+from submissao.models import Submissao
 
 from datetime import timedelta, datetime
 
@@ -142,7 +144,22 @@ class Usuario(AbstractBaseUser):
     def get_usuario_register_activate_url(self):
         return '%s%s' % (settings.DOMINIO_URL, reverse('usuario_register_activate', kwargs={'slug': self.slug}))
 
-
     @property
     def total_eventos_ativos(self):
         return Evento.objects.filter(is_active=True).count()
+    
+    @property
+    def total_submissoes_atencao(self):        
+        return Submissao.objects.filter(Q(evento__coordenador = self) & Q(avaliacao = None)).count()
+    
+    @property
+    def total_avaliacoes_atencao(self):                
+        return Avaliacao.objects.filter(Q(submissao__evento__coordenador = self) & Q(submissao__status ='EM AVALIAÇÃO')).count()
+
+    @property
+    def total_submissoes_incompletas_atencao(self):                
+        return Submissao.objects.filter(Q(evento__coordenador = self) & Q(status = 'APROVADO') ).count()
+
+    @property
+    def total_eventos_coordenados(self):                
+        return Evento.objects.filter(coordenador = self).count()
