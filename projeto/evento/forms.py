@@ -13,6 +13,16 @@ class EventoForm(forms.ModelForm):
         model = Evento
         fields = ['nome', 'tipo', 'descricao', 'publicado', 'site', 'instituicao', 'coordenador', 'coordenador_suplente', 'email', 'data_inicio', 'data_limite_trabalhos', 'data_divulgacao_trabalhos_aprovados', 'data_limite_reenvio_trabalhos_corrigidos', 'modelo_artigo', 'arquivo_modelo',  'is_active']
 
+    def __init__(self, usuario=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if usuario and usuario.tipo == 'COORDENADOR':
+            self.fields['nome'].widget.attrs['readonly'] = 'readonly'
+            self.fields['tipo'].widget.attrs['readonly'] = 'readonly'
+            self.fields['instituicao'].widget.attrs['readonly'] = 'readonly'
+            self.fields['coordenador'].widget.attrs['readonly'] = 'readonly'
+            self.fields['coordenador_suplente'].widget.attrs['readonly'] = 'readonly'
+            self.fields['is_active'].widget.attrs['disabled'] = 'disabled'
+
 
 class BuscaEventoForm(forms.Form):        
     pesquisa = forms.CharField(label='Pesquisa livre', required=False)

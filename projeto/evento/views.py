@@ -11,7 +11,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.urls import reverse
 
-from utils.decorators import LoginRequiredMixin, StaffRequiredMixin
+from utils.decorators import LoginRequiredMixin, StaffRequiredMixin, CoordenadorRequiredMixin
 
 from .models import Evento
 
@@ -33,7 +33,10 @@ class EventoListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):                
         qs = super().get_queryset().all()        
-        
+
+        if self.request.user.tipo == 'COORDENADOR':
+            qs = qs.filter(coordenador=self.request.user)
+
         if self.request.GET:
             #quando ja tem dados filtrando
             form = BuscaEventoForm(data=self.request.GET)
@@ -61,12 +64,17 @@ class EventoCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
         return reverse(self.success_url)
 
 
-class EventoUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
+class EventoUpdateView(LoginRequiredMixin, CoordenadorRequiredMixin, UpdateView):
     model = Evento
     # fields = ['nome', 'tipo', 'descricao', 'site', 'instituicao', 'coordenador', 'coordenador_suplente', 'email', 'data_inicio', 'data_limite_trabalhos', 'data_divulgacao_trabalhos_aprovados', 'data_limite_reenvio_trabalhos_corrigidos', 'modelo_artigo', 'arquivo_modelo', 'publicado', 'is_active']
     form_class = EventoForm
     success_url = 'evento_list'
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = EventoForm(usuario=self.request.user, instance=self.object)
+        return context
+
     def get_success_url(self):
         messages.success(self.request, 'Evento atualizado com sucesso na plataforma!')
         return reverse(self.success_url) 
